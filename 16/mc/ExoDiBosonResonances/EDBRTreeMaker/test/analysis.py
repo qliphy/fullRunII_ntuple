@@ -10,7 +10,7 @@ filterMode = False # True
 ######## Sequence settings ##########
 corrJetsOnTheFly = True
 runOnMC  = True
-runOnSig = False
+runOnSig = True
 DOHLTFILTERS = True
 #useJSON = not (runOnMC)
 #JSONfile = 'Cert_246908-258750_13TeV_PromptReco_Collisions15_25ns_JSON.txt'
@@ -21,10 +21,10 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration/StandardSequences/FrontierConditions_GlobalTag_condDBv2_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 if runOnMC:
-   process.GlobalTag.globaltag = '80X_mcRun2_asymptotic_2016_TrancheIV_v6'#'MCRUN2_74_V9::All'
+   process.GlobalTag.globaltag = '80X_mcRun2_asymptotic_2016_TrancheIV_v8'#'MCRUN2_74_V9::All'
    #process.GlobalTag.globaltag = '94X_mc2017_realistic_v14'#'MCRUN2_74_V9::All'
 elif not(runOnMC):
-   process.GlobalTag.globaltag = '80X_dataRun2_2016SeptRepro_v4'
+   process.GlobalTag.globaltag = '80X_dataRun2_2016SeptRepro_v7'
 
 hltFiltersProcessName = 'RECO'
 if runOnMC:
@@ -161,39 +161,6 @@ addJetCollection(
 #    fatJets=cms.InputTag('ak8PFJetsCHS'),             # needed for subjet flavor clustering
 #    groomedFatJets=cms.InputTag('ak8PFJetsCHSSoftDrop') # needed for subjet flavor clustering
 )
-#'''
-#from RecoBTag.DeepFlavour.DeepFlavourJetTagsProducer_cfi import *
-# this loads all available b-taggers
-#process.load("RecoBTag.Configuration.RecoBTag_cff")
-#process.load("RecoBTag.DeepFlavour.DeepFlavourJetTagsProducer_cfi")
-#process.load("RecoBTag.DeepFlavour.deepFlavour_cff")
-#'''
-from RecoBTag.Configuration.RecoBTag_EventContent_cff import *
-from RecoBTag.Configuration.RecoBTag_cff import *
-from RecoBTag.DeepFlavour.DeepFlavourJetTagsProducer_cfi import deepFlavourJetTags
-from RecoBTag.DeepFlavour.deepFlavour_cff import *
-from PhysicsTools.PatAlgos.tools.jetTools import updateJetCollection
-
-updateJetCollection(
-   process,
-   labelName = 'DeepFlavour',
-   jetSource = cms.InputTag('cleanPuppiAK4'),
-   pvSource = cms.InputTag('offlineSlimmedPrimaryVertices'),
-   svSource = cms.InputTag('slimmedSecondaryVertices'),
-   jetCorrections = ('AK4PFchs', cms.vstring(['L1FastJet', 'L2Relative', 'L3Absolute']), 'None'),
-   btagDiscriminators =      ['deepFlavourJetTags:probb',     'deepFlavourJetTags:probbb','deepFlavourJetTags:probc','deepFlavourJetTags:probudsg','deepFlavourJetTags:probcc'],
-   postfix='NewDFTraining'
-)
-
-#process.selectedUpdatedPatJetsDeepFlavourNewDFTraining.userData.userFloats.src =[]
-#'''
-'''
-process.patjets = cms.EDAnalyzer('EDBRTreeMaker',
-   PatJets = cms.InputTag("selectedUpdatedPatJets"),
-   PTMin = cms.double(-1),
-   BTag = cms.string("deepFlavourJetTags:probb"),
-)
-'''
 process.selectedPatJetsAK8SoftDropPacked = cms.EDProducer("BoostedJetMerger",
     jetSrc = cms.InputTag("selectedPatJetsAK8Softdrop"),
     subjetSrc = cms.InputTag("selectedPatJetsAK8SoftDropSubjets")
@@ -314,69 +281,80 @@ jetsAK8puppi = "cleanPuppi"
  
 if runOnMC:
    jecLevelsAK8chs = [
-                                   'Summer16_23Sep2016V3_MC_L1FastJet_AK8PFchs.txt',
-                                   'Summer16_23Sep2016V3_MC_L2Relative_AK8PFchs.txt',
-                                   'Summer16_23Sep2016V3_MC_L3Absolute_AK8PFchs.txt'
+                                   'Summer16_23Sep2016V4_MC_L1FastJet_AK8PFchs.txt',
+                                   'Summer16_23Sep2016V4_MC_L2Relative_AK8PFchs.txt',
+                                   'Summer16_23Sep2016V4_MC_L3Absolute_AK8PFchs.txt'
      ]
    jecLevelsAK8chsGroomed = [
-                                   'Summer16_23Sep2016V3_MC_L2Relative_AK8PFchs.txt',
-                                   'Summer16_23Sep2016V3_MC_L3Absolute_AK8PFchs.txt'
+                                   'Summer16_23Sep2016V4_MC_L2Relative_AK8PFchs.txt',
+                                   'Summer16_23Sep2016V4_MC_L3Absolute_AK8PFchs.txt'
      ]
    jecLevelsAK8puppi = [
-                                   'Summer16_23Sep2016V3_MC_L1FastJet_AK8PFPuppi.txt',
-                                   'Summer16_23Sep2016V3_MC_L2Relative_AK8PFPuppi.txt',
-                                   'Summer16_23Sep2016V3_MC_L3Absolute_AK8PFPuppi.txt'
+                                   'Summer16_23Sep2016V4_MC_L1FastJet_AK8PFPuppi.txt',
+                                   'Summer16_23Sep2016V4_MC_L2Relative_AK8PFPuppi.txt',
+                                   'Summer16_23Sep2016V4_MC_L3Absolute_AK8PFPuppi.txt'
      ]
    jecLevelsAK8puppiGroomed = [
-                                   'Summer16_23Sep2016V3_MC_L2Relative_AK8PFPuppi.txt',
-                                   'Summer16_23Sep2016V3_MC_L3Absolute_AK8PFPuppi.txt'
+                                   'Summer16_23Sep2016V4_MC_L2Relative_AK8PFPuppi.txt',
+                                   'Summer16_23Sep2016V4_MC_L3Absolute_AK8PFPuppi.txt'
      ]
    BjecLevelsAK4chs = [
-                                   'Summer16_23Sep2016V3_MC_L1FastJet_AK4PFPuppi.txt',
-                                   'Summer16_23Sep2016V3_MC_L2Relative_AK4PFPuppi.txt',
-                                   'Summer16_23Sep2016V3_MC_L3Absolute_AK4PFPuppi.txt'
+                                   'Summer16_23Sep2016V4_MC_L1FastJet_AK4PFPuppi.txt',
+                                   'Summer16_23Sep2016V4_MC_L2Relative_AK4PFPuppi.txt',
+                                   'Summer16_23Sep2016V4_MC_L3Absolute_AK4PFPuppi.txt'
      ]
    jecLevelsAK4chs = [
-                                   'Summer16_23Sep2016V3_MC_L1FastJet_AK4PFchs.txt',
-                                   'Summer16_23Sep2016V3_MC_L2Relative_AK4PFchs.txt',
-                                   'Summer16_23Sep2016V3_MC_L3Absolute_AK4PFchs.txt'
+                                   'Summer16_23Sep2016V4_MC_L1FastJet_AK4PFchs.txt',
+                                   'Summer16_23Sep2016V4_MC_L2Relative_AK4PFchs.txt',
+                                   'Summer16_23Sep2016V4_MC_L3Absolute_AK4PFchs.txt'
     ]
 else:
    jecLevelsAK8chs = [
-                                   'Summer16_23Sep2016BCDV3_DATA_L1FastJet_AK8PFchs.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2Relative_AK8PFchs.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L3Absolute_AK8PFchs.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2L3Residual_AK8PFchs.txt'
+                                   'Summer16_23Sep2016BCDV4_DATA_L1FastJet_AK8PFchs.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2Relative_AK8PFchs.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L3Absolute_AK8PFchs.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2L3Residual_AK8PFchs.txt'
      ]
    jecLevelsAK8chsGroomed = [
-                                   'Summer16_23Sep2016BCDV3_DATA_L2Relative_AK8PFchs.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L3Absolute_AK8PFchs.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2L3Residual_AK8PFchs.txt'
+                                   'Summer16_23Sep2016BCDV4_DATA_L2Relative_AK8PFchs.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L3Absolute_AK8PFchs.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2L3Residual_AK8PFchs.txt'
      ]
    jecLevelsAK8puppi = [
-                                   'Summer16_23Sep2016BCDV3_DATA_L1FastJet_AK8PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2Relative_AK8PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L3Absolute_AK8PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2L3Residual_AK8PFPuppi.txt'
+                                   'Summer16_23Sep2016BCDV4_DATA_L1FastJet_AK8PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2Relative_AK8PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L3Absolute_AK8PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2L3Residual_AK8PFPuppi.txt'
      ]
    jecLevelsAK8puppiGroomed = [
-                                   'Summer16_23Sep2016BCDV3_DATA_L2Relative_AK8PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L3Absolute_AK8PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2L3Residual_AK8PFPuppi.txt'
+                                   'Summer16_23Sep2016BCDV4_DATA_L2Relative_AK8PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L3Absolute_AK8PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2L3Residual_AK8PFPuppi.txt'
      ]
    BjecLevelsAK4chs = [
-                                   'Summer16_23Sep2016BCDV3_DATA_L1FastJet_AK4PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2Relative_AK4PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L3Absolute_AK4PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2L3Residual_AK4PFPuppi.txt'
+                                   'Summer16_23Sep2016BCDV4_DATA_L1FastJet_AK4PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2Relative_AK4PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L3Absolute_AK4PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2L3Residual_AK4PFPuppi.txt'
 
      ]
    jecLevelsAK4chs = [
-                                   'Summer16_23Sep2016BCDV3_DATA_L1FastJet_AK4PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2Relative_AK4PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L3Absolute_AK4PFPuppi.txt',
-                                   'Summer16_23Sep2016BCDV3_DATA_L2L3Residual_AK4PFPuppi.txt'
+                                   'Summer16_23Sep2016BCDV4_DATA_L1FastJet_AK4PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2Relative_AK4PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L3Absolute_AK4PFPuppi.txt',
+                                   'Summer16_23Sep2016BCDV4_DATA_L2L3Residual_AK4PFPuppi.txt'
      ]
+# L1 prefiring
+process.prefiringweight = cms.EDProducer("L1ECALPrefiringWeightProducer",
+                                 ThePhotons = cms.InputTag("slimmedPhotons"),
+                                 TheJets = cms.InputTag("slimmedJets"),
+#                                L1Maps = cms.string(relBase+"/src/L1Prefiring/EventWeightProducer/files/L1PrefiringMaps_new.root"),
+                                # L1Maps = cms.string("L1PrefiringMaps_new.root"), # update this line with the location of this file
+                                L1Maps = cms.string("L1PrefiringMaps_new.root"),
+                                 DataEra = cms.string("2016BtoH"), #Use 2016BtoH for 2016
+                                 UseJetEMPt = cms.bool(False), #can be set to true to use jet prefiring maps parametrized vs pt(em) instead of pt
+                                 PrefiringRateSystematicUncty = cms.double(0.2) #Minimum relative prefiring uncty per object
+                                 )
 process.treeDumper = cms.EDAnalyzer("EDBRTreeMaker",
                                     originalNEvents = cms.int32(1),
                                     crossSectionPb = cms.double(1),
@@ -400,9 +378,8 @@ process.treeDumper = cms.EDAnalyzer("EDBRTreeMaker",
                                     t1muSrc = cms.InputTag("slimmedMuons"),
                                     metSrc = cms.InputTag("slimmedMETs"),
                                     mets = cms.InputTag(METS),
-                                    ##ak4jetsSrc = cms.InputTag("cleanAK4Jets"), 
-                                    #ak4jetsSrc = cms.InputTag("cleanPuppiAK4"), 
-                                    ak4jetsSrc = cms.InputTag("selectedUpdatedPatJetsDeepFlavourNewDFTraining"), 
+                                    #ak4jetsSrc = cms.InputTag("cleanAK4Jets"), 
+                                    ak4jetsSrc = cms.InputTag("cleanPuppiAK4"), 
                                     hadronicVSrc = cms.InputTag("hadronicV"),
                                     hadronicVSrc_raw = cms.InputTag("slimmedJetsAK8"),
                                     hadronicVSoftDropSrc = cms.InputTag("selectedPatJetsAK8SoftDropPacked"),
@@ -472,10 +449,9 @@ process.analysis = cms.Path(process.leptonSequence +
                             process.ApplyBaselineHBHENoiseFilter+
                             process.ApplyBaselineHBHEIsoNoiseFilter+
                             process.jetSequence +
-			    #process.patjets +
                             process.metfilterSequence +
                             process.gravitonSequence +
-                            process.treeDumper)
+                            process.prefiringweight*process.treeDumper)
 
 if option=='RECO':
     process.analysis.replace(process.leptonSequence, process.goodOfflinePrimaryVertex + process.leptonSequence)
@@ -497,18 +473,14 @@ process.source.fileNames = [
 #'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v1-3000/crab_WWW-MA-3000/180715_150422/0000/EXO-RunIISummer16MiniAODv2-07193_98.root',
 #'file:/eos/cms/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/xulyu/WWW/WWW-v1-3000/crab_WWW-MA-3000/180715_150422/0000/EXO-RunIISummer16MiniAODv2-07193_99.root',
 #'file:/eos/cms/store/user/xulyu/EXO-RunIISummer16MiniAODv2-07193_1.root',
-'/store/mc/RunIISummer16MiniAODv2/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/FC517460-77BE-E611-940D-90B11C2801E1.root'
-#'/store/mc/RunIISummer16MiniAODv2/WkkToWRadionToWWW_M1500-R0-9-TuneCUEP8M1_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/D20E05D7-5FC6-E811-AA1E-0CC47A5FBE21.root'
 #'/store/mc/RunIISummer16MiniAODv2/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/FC517460-77BE-E611-940D-90B11C2801E1.root'
-#'/store/mc/RunIISummer16MiniAODv2/ttWJets_13TeV_madgraphMLM/MINIAODSIM/80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/90000/F4B12F5A-D2C9-E611-892C-0025905A6136.root'
-#'/store/mc/RunIISummer16MiniAODv2/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/80000/FED04F50-A3BE-E611-A893-0025900E3502.root'
-#'/store/mc/RunIISummer16MiniAODv2/ttZJets_13TeV_madgraphMLM-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/110000/FEA79E79-70FC-E611-A9F6-02163E019B52.root'
+'/store/mc/RunIISummer16MiniAODv2/WkkToWRadionToWWW_M1500-R0-9-TuneCUEP8M1_13TeV-madgraph/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6-v1/60000/D20E05D7-5FC6-E811-AA1E-0CC47A5FBE21.root'
+#'/store/mc/RunIISummer16MiniAODv2/WJetsToLNu_HT-800To1200_TuneCUETP8M1_13TeV-madgraphMLM-pythia8/MINIAODSIM/PUMoriond17_80X_mcRun2_asymptotic_2016_TrancheIV_v6_ext1-v1/120000/FC517460-77BE-E611-940D-90B11C2801E1.root'
 ]
 
-#process.maxEvents.input = 1
-process.maxEvents.input = 5000
+process.maxEvents.input = -1
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 10000
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000000
 process.MessageLogger.cerr.FwkReport.limit = 99999999
 
 process.TFileService = cms.Service("TFileService",

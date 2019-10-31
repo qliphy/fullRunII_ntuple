@@ -315,7 +315,12 @@ private:
     TLorentzVector ak8sj21,ak8sj22,ak8sj23,ak8sj24,ak8sj25,puppi_softdropj2;
 
     void setDummyValues();
-
+    
+    //// L1 prefiring
+    edm::EDGetTokenT< double > prefweight_token;
+    edm::EDGetTokenT< double > prefweightup_token;
+    edm::EDGetTokenT< double > prefweightdown_token;
+    
     /// Parameters to steer the treeDumper
     int originalNEvents_;
     double crossSectionPb_;
@@ -343,6 +348,9 @@ private:
     int  HLT_Ele1, HLT_Ele2, HLT_Ele3, HLT_Ele4, HLT_Ele5, HLT_Ele6, HLT_Ele7, HLT_Ele8;
     int  HLT_Mu1, HLT_Mu2, HLT_Mu3, HLT_Mu4, HLT_Mu5, HLT_Mu6, HLT_Mu7, HLT_Mu8, HLT_Mu9, HLT_Mu10, HLT_Mu11,  HLT_Mu12;
 
+    //L1 prefiring
+    double L1prefiring,L1prefiringup,L1prefiringdown;
+    
     // filter
     bool passFilter_HBHE_                   ;
     bool passFilter_HBHEIso_                ;
@@ -451,6 +459,11 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
     metToken_ = consumes<pat::METCollection>(iConfig.getParameter<edm::InputTag>("mets"));
     t1muSrc_      = consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>( "t1muSrc") ) ;
 
+    //  L1 prefiring
+    prefweight_token = consumes< double >(edm::InputTag("prefiringweight:NonPrefiringProb"));
+    prefweightup_token = consumes< double >(edm::InputTag("prefiringweight:NonPrefiringProbUp"));
+    prefweightdown_token = consumes< double >(edm::InputTag("prefiringweight:NonPrefiringProbDown"));
+    
     // filter
     noiseFilterToken_ = consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("noiseFilter"));
     HBHENoiseFilter_Selector_ =  iConfig.getParameter<std::string> ("noiseFilterSelection_HBHENoiseFilter");
@@ -574,7 +587,9 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
 
     outTree_ = fs->make<TTree>("EDBRCandidates","EDBR Candidates");
     outTreew_ = fs->make<TTree>("EDBRCandidatesw","EDBR Candidates");
-
+    outTree_->Branch("L1prefiring"           ,&L1prefiring         ,"L1prefiring/D"          );
+    outTree_->Branch("L1prefiringup"           ,&L1prefiringup         ,"L1prefiringup/D"          );
+    outTree_->Branch("L1prefiringdown"           ,&L1prefiringdown         ,"L1prefiringdown/D"          );
     /// Basic event quantities
     if (RunOnMC_){
         outTree_->Branch("pweight"           ,pweight         ,"pweight[212]/D"          );
@@ -1718,10 +1733,22 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     //iEvent.getByLabel("slimmedElectrons",eles);
     iEvent.getByToken(EleSrc_, eles);
     if (RunOnSig_||RunOnMC_){
+        //  L1 prefiring
+        edm::Handle< double > theprefweight;
+        iEvent.getByToken(prefweight_token, theprefweight ) ;
+        L1prefiring =(*theprefweight);
+        
+        edm::Handle< double > theprefweightup;
+        iEvent.getByToken(prefweightup_token, theprefweightup ) ;
+        L1prefiringup =(*theprefweightup);
+        
+        edm::Handle< double > theprefweightdown;
+        iEvent.getByToken(prefweightdown_token, theprefweightdown ) ;
+        L1prefiringdown =(*theprefweightdown);
+        
         edm::Handle<LHEEventProduct> wgtsource;
-        iEvent.getByToken(LheToken_, wgtsource);
+        /*iEvent.getByToken(LheToken_, wgtsource);
         //std::cout<<"weight number "<<wgtsource->weights().size()<<std::endl;
-       /* 
         for ( int i=0; i<211; ++i) {
             pweight[i]= wgtsource->weights()[i].wgt/wgtsource->originalXWGTUP();
             //cout<<wgtsource->weights()[i].id<<"    "<<pweight[i]<<endl;
@@ -2764,9 +2791,9 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             //const float rawPt  = met.shiftedPt(pat::MET::NoShift, pat::MET::Raw);
             //const float rawPhi = met.shiftedPhi(pat::MET::NoShift, pat::MET::Raw);
             //const float rawSumEt = met.shiftedSumEt(pat::MET::NoShift, pat::MET::Raw);
-            const float rawPt	 = met.uncorPt();//met.shiftedPt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
-            const float rawPhi   = met.uncorPhi();//met.shiftedPhi(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
-            const float rawSumEt = met.uncorSumEt();
+            Double_t rawPt	 = met.corPt();//met.shiftedPt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
+            Double_t rawPhi   = met.corPhi();//met.shiftedPhi(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
+            Double_t rawSumEt = met.corSumEt();
             //const float rawPt	 = met.shiftedPt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
             //const float rawPhi   = met.shiftedPhi(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
             //const float rawSumEt = met.shiftedSumEt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
@@ -2775,10 +2802,11 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             Double_t rawPx = rawMET_.Px();
             Double_t rawPy = rawMET_.Py();
             Double_t rawEt = std::hypot(rawPx,rawPy);
-            METraw_et = rawEt;
-            METraw_phi = rawPhi;
-            METraw_sumEt = rawSumEt;
-            double pxcorr = rawPx+TypeICorrMap_["corrEx"];
+            MET_et = rawEt;
+            MET_phi = rawPhi;
+            MET_sumEt = rawSumEt;
+            //cout<<MET_et<<" default MET  "<<MET_phi<<endl;
+            /*double pxcorr = rawPx+TypeICorrMap_["corrEx"];
             double pycorr = rawPy+TypeICorrMap_["corrEy"];
             double et     = std::hypot(pxcorr,pycorr);
             double sumEtcorr = rawSumEt+TypeICorrMap_["corrSumEt"];
@@ -2789,10 +2817,10 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             MET_phi = corrmet.Phi();
             MET_sumEt = sumEtcorr;
             MET_corrPx = TypeICorrMap_["corrEx"];
-            MET_corrPy = TypeICorrMap_["corrEy"];
+            MET_corrPy = TypeICorrMap_["corrEy"];*/
         }
         // ***************************************************************** //
- 
+        
         /// For the time being, set these to 1
         triggerWeight=1.0;
         pileupWeight=1.0;
@@ -2809,7 +2837,8 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         lep          = std::max(abs(leptonicV.daughter(0)->pdgId()), abs(leptonicV.daughter(1)->pdgId()));
         double energylep1     = leptonicV.daughter(0)->energy();
         met          = metCand.pt();
-        metPhi       = metCand.phi();
+        metPhi         = metCand.phi();
+        //cout<<met<<" met candidate "<<metPhi<<endl;
         //candMass     = graviton.mass();
         ptVlep       = leptonicV.pt();
         yVlep        = leptonicV.eta();
@@ -2886,6 +2915,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         phiVlepJEC      = WLeptonic.phi();
         massVlepJEC     = WLeptonic.mass();
         mtVlepJEC       =   sqrt(2*ptlep1*MET_et*(1.0-cos(philep1-MET_phi))); //WLeptonic.mt();
+        //cout<<ptVlep<<" lep W "<<ptVlepJEC<<"   "<<yVlep<<" lep W "<<yVlepJEC<<"   "<<phiVlep<<" lep W "<<phiVlepJEC<<"   "<<massVlep<<" lep W "<<massVlepJEC<<"   "<<endl;
         delPhilepmet = deltaPhi(philep1, MET_phi);
         //cout<<"mtVlepJEC"<<mtVlepJEC<<endl;
         ////////////////////////JEC for AK8/////////////////////////////////
@@ -3343,6 +3373,10 @@ void EDBRTreeMaker::setDummyValues() {
     candMass       = -99;
     ptVlep         = -99;
 
+    L1prefiring = -99;
+    L1prefiringup = -99;
+    L1prefiringdown = -99;
+    
     jetAK8puppi_ptJEC         = -99;
     jetAK8puppi_eta         = -99;
     jetAK8puppi_phi         = -99;

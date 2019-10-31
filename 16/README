@@ -16,10 +16,22 @@ git clone https://github.com/cms-jet/JetToolbox.git JMEAnalysis/JetToolbox -b je
 # check out the package
 git clone https://gitlab.cern.ch/DeepAK8/NNKit.git
 
+#####for mc and data###############
+ git cms-merge-topic -u mverzett:DeepFlavour-from-CMSSW_8_0_21
+mkdir RecoBTag/DeepFlavour/data
+cd RecoBTag/DeepFlavour/data
+wget http://home.fnal.gov/~verzetti//DeepFlavour/training/DeepFlavourNoSL.json
+#######DeepCSV end######################
+
 # setup mxnet library
 cp NNKit/misc/*.xml $CMSSW_BASE/config/toolbox/$SCRAM_ARCH/tools/selected
 scram setup openblas
 scram setup mxnet_predict
 
+#git cms-merge-topic lathomas:L1Prefiring_8_0_32
+cp -r /afs/cern.ch/user/x/xulyu/work/public/prefiring/CMSSW_8_0_26_patch2/src/L1Prefiring/ .
+#mv L1Prefiring/EventWeightProducer/files L1Prefiring/EventWeightProducer/data
+cp L1Prefiring/EventWeightProducer/data/L1PrefiringMaps_new.root ExoDiBosonResonances/EDBRTreeMaker/test
+
 # compile
-scramv1 b -j 16  
+scramv1 b -j 16
