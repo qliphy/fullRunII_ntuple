@@ -1,6 +1,15 @@
-cmsrel CMSSW_9_4_6_patch1
-cd CMSSW_9_4_6_patch1/src
+cmsrel CMSSW_9_4_11
+cd CMSSW_9_4_11/src
 cmsenv
+#git cms-merge-topic lathomas:L1Prefiring_9_4_9
+cp -r /afs/cern.ch/user/x/xulyu/work/public/prefiring/CMSSW_9_4_9/src/L1Prefiring .
+cp L1Prefiring/EventWeightProducer/files/L1PrefiringMaps_new.root ExoDiBosonResonances/EDBRTreeMaker/test
+
+#git cms-merge-topic cms-egamma:EgammaID_949
+cp -r /afs/cern.ch/user/x/xulyu/work/public/prefiring/CMSSW_9_4_9/src/RecoEgamma .
+
+#git cms-addpkg RecoMET/METFilters
+cp -r /afs/cern.ch/user/x/xulyu/work/public/prefiring/CMSSW_9_4_9/src/RecoMET .
 
 # clone the package and check out the "for94X" branch
 git clone ssh://git@gitlab.cern.ch:7999/DeepAK8/NNKit.git -b for94X

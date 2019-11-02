@@ -8,7 +8,7 @@ process.options = cms.untracked.PSet(wantSummary = cms.untracked.bool(True),allo
 filterMode = False # True                
  
 ######## Sequence settings ##########
-corrJetsOnTheFly = True
+corrJetsOnTheFly = False
 runOnMC  = True
 runOnSig = False
 DOHLTFILTERS = True
@@ -21,10 +21,9 @@ process.load('Configuration.StandardSequences.GeometryRecoDB_cff')
 process.load('Configuration/StandardSequences/FrontierConditions_GlobalTag_condDBv2_cff')
 from Configuration.AlCa.GlobalTag import GlobalTag
 if runOnMC:
-   process.GlobalTag.globaltag = '94X_dataRun2_ReReco_EOY17_v6'#'MCRUN2_74_V9::All'
-   #process.GlobalTag.globaltag = '94X_mc2017_realistic_v14'#'MCRUN2_74_V9::All'
+   process.GlobalTag.globaltag = '94X_mc2017_realistic_v17'#'MCRUN2_74_V9::All'
 elif not(runOnMC):
-   process.GlobalTag.globaltag = '94X_mc2017_realistic_v14'
+   process.GlobalTag.globaltag = '94X_dataRun2_v11'
 
 hltFiltersProcessName = 'RECO'
 if runOnMC:
@@ -44,6 +43,28 @@ process.ApplyBaselineHBHEIsoNoiseFilter = cms.EDFilter('BooleanFlagFilter',
                                                        inputLabel = cms.InputTag('HBHENoiseFilterResultProducer','HBHEIsoNoiseFilterResult'),
                                                        reverseDecision = cms.bool(False)
                                                        )
+process.load('RecoMET.METFilters.ecalBadCalibFilter_cfi')
+
+baddetEcallist = cms.vuint32(
+    [872439604,872422825,872420274,872423218,
+     872423215,872416066,872435036,872439336,
+     872420273,872436907,872420147,872439731,
+     872436657,872420397,872439732,872439339,
+     872439603,872422436,872439861,872437051,
+     872437052,872420649,872422436,872421950,
+     872437185,872422564,872421566,872421695,
+     872421955,872421567,872437184,872421951,
+     872421694,872437056,872437057,872437313])
+
+
+process.ecalBadCalibReducedMINIAODFilter = cms.EDFilter(
+    "EcalBadCalibFilter",
+    EcalRecHitSource = cms.InputTag("reducedEgamma:reducedEERecHits"),
+    ecalMinEt        = cms.double(50.),
+    baddetEcal    = baddetEcallist, 
+    taggingMode = cms.bool(True),
+    debug = cms.bool(False)
+    )
 
 ######### read JSON file for data ##########					                                                             
 '''if not(runOnMC) and useJSON:
@@ -167,11 +188,6 @@ process.selectedPatJetsAK8SoftDropPacked = cms.EDProducer("BoostedJetMerger",
 )
 
 
-# set up TransientTrackBuilder
-process.TransientTrackBuilderESProducer = cms.ESProducer("TransientTrackBuilderESProducer",
-    ComponentName=cms.string('TransientTrackBuilder')
-)
-
 process.redoSoftDropPatJets+=process.patJetCorrFactorsAK8Softdrop
 process.redoSoftDropPatJets+=process.patJetsAK8Softdrop
 process.redoSoftDropPatJets+=process.selectedPatJetsAK8Softdrop
@@ -193,7 +209,7 @@ if option == 'RECO':
 #    process.goodJets.src = "selectedPatJetsAK8"
     process.Wtoenu.MET  = "slimmedMETs"
     process.Wtomunu.MET = "slimmedMETs"
-    process.goodPuppi.src = "selectedPatJetsAK8"
+    process.goodPuppi.src = "slimmedJetsAK8"
 
 process.goodOfflinePrimaryVertex = cms.EDFilter("VertexSelector",
                                        src = cms.InputTag("offlineSlimmedPrimaryVertices"),
@@ -315,40 +331,51 @@ if runOnMC:
     ]
 else:
    jecLevelsAK8chs = [
-                                   'Fall17_17Nov2017C_V32_DATA_L1FastJet_AK8PFchs.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFchs.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFchs.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFchs.txt'
+                                   'Fall17_17Nov2017B_V32_DATA_L1FastJet_AK8PFchs.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFchs.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFchs.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFchs.txt'
      ]
    jecLevelsAK8chsGroomed = [
-                                   'Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFchs.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFchs.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFchs.txt'
+                                   'Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFchs.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFchs.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFchs.txt'
      ]
    jecLevelsAK8puppi = [
-                                   'Fall17_17Nov2017C_V32_DATA_L1FastJet_AK8PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFPuppi.txt'
+                                   'Fall17_17Nov2017B_V32_DATA_L1FastJet_AK8PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFPuppi.txt'
      ]
    jecLevelsAK8puppiGroomed = [
-                                   'Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFPuppi.txt'
+                                   'Fall17_17Nov2017B_V32_DATA_L2Relative_AK8PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L3Absolute_AK8PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK8PFPuppi.txt'
      ]
    BjecLevelsAK4chs = [
-                                   'Fall17_17Nov2017C_V32_DATA_L1FastJet_AK4PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2Relative_AK4PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L3Absolute_AK4PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK4PFPuppi.txt'
+                                   'Fall17_17Nov2017B_V32_DATA_L1FastJet_AK4PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2Relative_AK4PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L3Absolute_AK4PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK4PFPuppi.txt'
 
      ]
    jecLevelsAK4chs = [
-                                   'Fall17_17Nov2017C_V32_DATA_L1FastJet_AK4PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2Relative_AK4PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L3Absolute_AK4PFPuppi.txt',
-                                   'Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK4PFPuppi.txt'
+                                   'Fall17_17Nov2017B_V32_DATA_L1FastJet_AK4PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2Relative_AK4PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L3Absolute_AK4PFPuppi.txt',
+                                   'Fall17_17Nov2017B_V32_DATA_L2L3Residual_AK4PFPuppi.txt'
      ]
+# L1 prefiring
+process.prefiringweight = cms.EDProducer("L1ECALPrefiringWeightProducer",
+                                 ThePhotons = cms.InputTag("slimmedPhotons"),
+                                 TheJets = cms.InputTag("slimmedJets"),
+#                                L1Maps = cms.string(relBase+"/src/L1Prefiring/EventWeightProducer/files/L1PrefiringMaps_new.root"),
+                                # L1Maps = cms.string("L1PrefiringMaps_new.root"), # update this line with the location of this file
+                                L1Maps = cms.string("L1PrefiringMaps_new.root"),
+                                 DataEra = cms.string("2017BtoF"), #Use 2016BtoH for 2016
+                                 UseJetEMPt = cms.bool(False), #can be set to true to use jet prefiring maps parametrized vs pt(em) instead of pt
+                                 PrefiringRateSystematicUncty = cms.double(0.2) #Minimum relative prefiring uncty per object
+                                 )
 process.treeDumper = cms.EDAnalyzer("EDBRTreeMaker",
                                     originalNEvents = cms.int32(1),
                                     crossSectionPb = cms.double(1),
@@ -396,20 +423,20 @@ process.treeDumper = cms.EDAnalyzer("EDBRTreeMaker",
                                     muons = cms.InputTag("slimmedMuons"),
                                     vertices = cms.InputTag("offlineSlimmedPrimaryVertices"),
                                     hltToken    = cms.InputTag("TriggerResults","","HLT"),
-                                    elPaths1     = cms.vstring("HLT_PFMETNoMu110_PFMHTNoMu110_IDTight*"),#EXO-15-002
-                                    elPaths2     = cms.vstring("HLT_Ele27_eta2p1_WP75_Gsf_v*", "HLT_Ele27_eta2p1_WPLoose_Gsf_v*"), #B2G-15-005
+                                    elPaths1     = cms.vstring("HLT_Ele32_WPTight_Gsf_L1DoubleEG_v*"),#EXO-15-002#1
+                                    elPaths2     = cms.vstring("HLT_Ele35_WPTight_Gsf_v*"), #B2G-15-005#2
                                     elPaths3     = cms.vstring("HLT_Ele45_WPLoose_Gsf_v*"),
-                                    elPaths4     = cms.vstring("HLT_Ele115_CaloIdVT_GsfTrkIdT_v*"),#("HLT_Ele35_WPLoose_Gsf_v*"),
+                                    elPaths4     = cms.vstring("HLT_Ele115_CaloIdVT_GsfTrkIdT_v*"),#("HLT_Ele35_WPLoose_Gsf_v*"),#3
                                     elPaths5     = cms.vstring("HLT_Ele40_WPTight_Gsf_v*"),#("HLT_Ele35_WPLoose_Gsf_v*"),
                                     #elPaths5     = cms.vstring("HLT_Ele25_WPTight_Gsf_v*"),
                                     elPaths6     = cms.vstring("HLT_Ele38_WPTight_Gsf_v*"),#("HLT_Ele25_eta2p1_WPLoose_Gsf_v*"),
-                                    elPaths7     = cms.vstring("HLT_AK8PFHT700_TrimR0p1PT0p03Mass50_v*"),#("HLT_Ele25_eta2p1_WPTight_Gsf_v*"),
+                                    elPaths7     = cms.vstring("HLT_Ele50_CaloIdVT_GsfTrkIdT_PFJet165_v*"),#("HLT_Ele25_eta2p1_WPTight_Gsf_v*"),#4
                                     elPaths8     = cms.vstring("HLT_Ele27_WPTight_Gsf_v*"),
                                     muPaths1     = cms.vstring("HLT_PFHT650_WideJetMJJ900DEtaJJ1p5_v*"),#EXO-15-002
                                     muPaths2     = cms.vstring("HLT_Mu50_v*"), #B2G-15-005
                                     muPaths3     = cms.vstring("HLT_TkMu50_v*"), #B2G-15-005
-                                    muPaths4     = cms.vstring("HLT_Mu16_eta2p1_MET30_v*", "HLT_IsoMu16_eta2p1_MET30_v*"), #MET
-                                    muPaths5     = cms.vstring("HLT_PFHT800_v*"), #MET
+                                    muPaths4     = cms.vstring("HLT_OldMu100_v*"), #MET
+                                    muPaths5     = cms.vstring("HLT_TkMu100_v*"), #MET
                                     muPaths6     = cms.vstring("HLT_PFHT900_v*"),
                                     muPaths7     = cms.vstring("HLT_PFJet450_v*"),
                                     muPaths8     = cms.vstring("HLT_PFJet500_v*"),
@@ -420,7 +447,7 @@ process.treeDumper = cms.EDAnalyzer("EDBRTreeMaker",
                                     noiseFilter = cms.InputTag('TriggerResults','', hltFiltersProcessName),
                                     noiseFilterSelection_HBHENoiseFilter = cms.string('Flag_HBHENoiseFilter'),
                                     noiseFilterSelection_HBHENoiseIsoFilter = cms.string("Flag_HBHENoiseIsoFilter"),
-                                    noiseFilterSelection_GlobalTightHaloFilter = cms.string('Flag_globalTightHalo2016Filter'),
+                                    noiseFilterSelection_GlobalTightHaloFilter = cms.string('Flag_globalSuperTightHalo2016Filter'),
                                     noiseFilterSelection_EcalDeadCellTriggerPrimitiveFilter = cms.string('Flag_EcalDeadCellTriggerPrimitiveFilter'),
                                     noiseFilterSelection_goodVertices = cms.string('Flag_goodVertices'),
                                     noiseFilterSelection_eeBadScFilter = cms.string('Flag_eeBadScFilter'),
@@ -445,7 +472,7 @@ process.analysis = cms.Path(process.leptonSequence +
                             process.jetSequence +
                             process.metfilterSequence +
                             process.gravitonSequence +
-                            process.treeDumper)
+                            process.ecalBadCalibReducedMINIAODFilter*process.prefiringweight*process.treeDumper)
 
 if option=='RECO':
     process.analysis.replace(process.leptonSequence, process.goodOfflinePrimaryVertex + process.leptonSequence)
@@ -453,14 +480,17 @@ if option=='RECO':
 process.load("ExoDiBosonResonances.EDBRCommon.data.RSGravitonToWW_kMpl01_M_1000_Tune4C_13TeV_pythia8")
 #process.source.inputCommands = ['keep *','drop *_isolatedTracks_*_*']
 process.source.fileNames = [
-'/store/mc/RunIIFall17MiniAODv2/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/70000/FC761907-BF54-E811-9076-0242AC130002.root'
+#'/store/mc/RunIIFall17MiniAODv2/WJetsToLNu_HT-100To200_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/70000/FC761907-BF54-E811-9076-0242AC130002.root',
+#'/store/mc/RunIIFall17MiniAODv2/WZTo3LNu_3Jets_MLL-50_TuneCP5_13TeV-madgraphMLM-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/70000/F2EF406C-3F65-E811-AA59-0025905C43EC.root'
+'/store/mc/RunIIFall17MiniAODv2/WWToLNuQQ_NNPDF31_TuneCP5_PSweights_13TeV-powheg-pythia8/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14_ext1-v1/70000/FE6DE59D-2687-E811-9BAE-FA163ED7629D.root'
+#'/store/mc/RunIIFall17MiniAODv2/WkkToWRadionToWWW_M5000-R0-3_TuneCP5_13TeV-madgraph/MINIAODSIM/PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/40000/C0C22A41-8A4C-E811-BD33-0025907D24F0.root'
 ]
 
-process.maxEvents.input = 1000
+process.maxEvents.input = 10000
 process.load("FWCore.MessageLogger.MessageLogger_cfi")
-process.MessageLogger.cerr.FwkReport.reportEvery = 10000
+process.MessageLogger.cerr.FwkReport.reportEvery = 1000000
 process.MessageLogger.cerr.FwkReport.limit = 99999999
-
+print "hh"
 process.TFileService = cms.Service("TFileService",
                                    fileName = cms.string("RStreeEDBR_pickup.root")
                                    )

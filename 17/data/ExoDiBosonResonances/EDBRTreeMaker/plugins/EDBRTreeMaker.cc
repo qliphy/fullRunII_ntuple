@@ -170,6 +170,7 @@ private:
     std::string EEBadScNoiseFilter_Selector_;
     edm::EDGetTokenT<bool>  badMuon_Selector_;
     edm::EDGetTokenT<bool>  badChargedHadron_Selector_;
+    edm::EDGetTokenT<bool>  ecalBadCalibFilterUpdate_token ;
 
     // bool doHltFilters_;
     // DeepAK8
@@ -199,13 +200,36 @@ private:
     double jetAK8puppi_dnnDecorrbb,jetAK8puppi_dnnDecorrcc,jetAK8puppi_dnnDecorrbbnog,jetAK8puppi_dnnDecorrccnog,jetAK8puppi_dnnDecorrbb_2,jetAK8puppi_dnnDecorrcc_2,jetAK8puppi_dnnDecorrbbnog_2,jetAK8puppi_dnnDecorrccnog_2,jetAK8puppi_dnnDecorrbb_3,jetAK8puppi_dnnDecorrcc_3,jetAK8puppi_dnnDecorrbbnog_3,jetAK8puppi_dnnDecorrccnog_3;
     double jetAK8puppi_dnnDecorrqcd,jetAK8puppi_dnnDecorrtop,jetAK8puppi_dnnDecorrw,jetAK8puppi_dnnDecorrz,jetAK8puppi_dnnDecorrzbb,jetAK8puppi_dnnDecorrhbb,jetAK8puppi_dnnDecorrh4q,jetAK8puppi_dnnDecorrqcd_2,jetAK8puppi_dnnDecorrtop_2,jetAK8puppi_dnnDecorrw_2,jetAK8puppi_dnnDecorrz_2,jetAK8puppi_dnnDecorrzbb_2,jetAK8puppi_dnnDecorrhbb_2,jetAK8puppi_dnnDecorrh4q_2,jetAK8puppi_dnnDecorrqcd_3,jetAK8puppi_dnnDecorrtop_3,jetAK8puppi_dnnDecorrw_3,jetAK8puppi_dnnDecorrz_3,jetAK8puppi_dnnDecorrzbb_3,jetAK8puppi_dnnDecorrhbb_3,jetAK8puppi_dnnDecorrh4q_3;
     
-    double ptgenwl[5],etagenwl[5],phigenwl[5],massgenwl[5],taggenwl[5];
+    double ptgenwl[5],etagenwl[5],phigenwl[5],massgenwl[5],taggenwl[5],taggenwmother[5];
+    double genw_q1_pt[5],genw_q1_eta[5],genw_q1_phi[5],genw_q1_e[5],genw_q1_pdg[5];
+    double genw_q2_pt[5],genw_q2_eta[5],genw_q2_phi[5],genw_q2_e[5],genw_q2_pdg[5];
     double ptgenzl[5],etagenzl[5],phigenzl[5],massgenzl[5],taggenzl[5];
-    double ptgengl[5],etagengl[5],phigengl[5],egengl[5];
+    double ptgengl[10],etagengl[10],phigengl[10],egengl[10];
     double ptgenwf[5],etagenwf[5],phigenwf[5],massgenwf[5];
     double ptgenzf[5],etagenzf[5],phigenzf[5],massgenzf[5];
-    double ptgengf[5],etagengf[5],phigengf[5],egengf[5];
-
+    double ptgengf[10],etagengf[10],phigengf[10],egengf[10];
+    double gent_b_pt,gent_b_phi,gent_b_eta,gent_b_mass;
+    double genantit_b_pt,genantit_b_phi,genantit_b_eta,genantit_b_mass;
+    double gent_w_pt,gent_w_phi,gent_w_eta,gent_w_mass;
+    double genantit_w_pt,genantit_w_phi,genantit_w_eta,genantit_w_mass;
+    double gent_w_q1_pt,gent_w_q1_phi,gent_w_q1_eta,gent_w_q1_e,gent_w_q1_pdg;
+    double genantit_w_q1_pt,genantit_w_q1_phi,genantit_w_q1_eta,genantit_w_q1_e,genantit_w_q1_pdg;
+    double gent_w_q2_pt,gent_w_q2_phi,gent_w_q2_eta,gent_w_q2_e,gent_w_q2_pdg;
+    double genantit_w_q2_pt,genantit_w_q2_phi,genantit_w_q2_eta,genantit_w_q2_e,genantit_w_q2_pdg;
+    double ptgenq1l[5],etagenq1l[5],phigenq1l[5],egenq1l[5];
+    double ptgenq1f[5],etagenq1f[5],phigenq1f[5],egenq1f[5];
+    double ptgenq2l[5],etagenq2l[5],phigenq2l[5],egenq2l[5];
+    double ptgenq2f[5],etagenq2f[5],phigenq2f[5],egenq2f[5];
+    double ptgenq3l[5],etagenq3l[5],phigenq3l[5],egenq3l[5];
+    double ptgenq3f[5],etagenq3f[5],phigenq3f[5],egenq3f[5];
+    double ptgenq4l[5],etagenq4l[5],phigenq4l[5],egenq4l[5];
+    double ptgenq4f[5],etagenq4f[5],phigenq4f[5],egenq4f[5];
+    double ptgenq5l[5],etagenq5l[5],phigenq5l[5],egenq5l[5];
+    double ptgenq5f[5],etagenq5f[5],phigenq5f[5],egenq5f[5];
+    double mothergenq1f[5],mothergenq2f[5],mothergenq3f[5],mothergenq4f[5],mothergenq5f[5];
+    
+    double gent_w_tag,genantit_w_tag,mothergengf[10],mmothergengf[10],mmothergenq1f[5],mmothergenq2f[5],mmothergenq3f[5],mmothergenq4f[5],mmothergenq5f[5];
+    
     double vbfeta, vbfmjj;
     int      vbftag;
     int nj1, nj2;
@@ -293,7 +317,12 @@ private:
     TLorentzVector ak8sj21,ak8sj22,ak8sj23,ak8sj24,ak8sj25,puppi_softdropj2;
 
     void setDummyValues();
-
+    
+    //// L1 prefiring
+    edm::EDGetTokenT< double > prefweight_token;
+    edm::EDGetTokenT< double > prefweightup_token;
+    edm::EDGetTokenT< double > prefweightdown_token;
+    
     /// Parameters to steer the treeDumper
     int originalNEvents_;
     double crossSectionPb_;
@@ -321,6 +350,9 @@ private:
     int  HLT_Ele1, HLT_Ele2, HLT_Ele3, HLT_Ele4, HLT_Ele5, HLT_Ele6, HLT_Ele7, HLT_Ele8;
     int  HLT_Mu1, HLT_Mu2, HLT_Mu3, HLT_Mu4, HLT_Mu5, HLT_Mu6, HLT_Mu7, HLT_Mu8, HLT_Mu9, HLT_Mu10, HLT_Mu11,  HLT_Mu12;
 
+    //L1 prefiring
+    double L1prefiring,L1prefiringup,L1prefiringdown;
+    
     // filter
     bool passFilter_HBHE_                   ;
     bool passFilter_HBHEIso_                ;
@@ -330,6 +362,7 @@ private:
     bool passFilter_EEBadSc_                ;
     bool passFilter_badMuon_                ;
     bool passFilter_badChargedHadron_       ;
+    bool passecalBadCalibFilterUpdate_      ;
 
     edm::EDGetTokenT<edm::View<reco::Candidate>> leptonicVSrc_;
     edm::EDGetTokenT<edm::View<pat::Jet>> hadronicVSrc_;
@@ -429,6 +462,11 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
     metToken_ = consumes<pat::METCollection>(iConfig.getParameter<edm::InputTag>("mets"));
     t1muSrc_      = consumes<edm::View<pat::Muon>>(iConfig.getParameter<edm::InputTag>( "t1muSrc") ) ;
 
+    //  L1 prefiring
+    prefweight_token = consumes< double >(edm::InputTag("prefiringweight:NonPrefiringProb"));
+    prefweightup_token = consumes< double >(edm::InputTag("prefiringweight:NonPrefiringProbUp"));
+    prefweightdown_token = consumes< double >(edm::InputTag("prefiringweight:NonPrefiringProbDown"));
+    
     // filter
     noiseFilterToken_ = consumes<edm::TriggerResults>(iConfig.getParameter<edm::InputTag>("noiseFilter"));
     HBHENoiseFilter_Selector_ =  iConfig.getParameter<std::string> ("noiseFilterSelection_HBHENoiseFilter");
@@ -439,6 +477,7 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
     EEBadScNoiseFilter_Selector_ =  iConfig.getParameter<std::string> ("noiseFilterSelection_eeBadScFilter");
     badMuon_Selector_ =  consumes<bool>(iConfig.getParameter<edm::InputTag> ("noiseFilterSelection_badMuon"));
     badChargedHadron_Selector_ =  consumes<bool>(iConfig.getParameter<edm::InputTag> ("noiseFilterSelection_badChargedHadron"));
+    ecalBadCalibFilterUpdate_token= consumes< bool >(edm::InputTag("ecalBadCalibReducedMINIAODFilter"));
 
     std::string jecpath = iConfig.getParameter<std::string>("jecpath");
     std::string tmpString;
@@ -552,7 +591,9 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
 
     outTree_ = fs->make<TTree>("EDBRCandidates","EDBR Candidates");
     outTreew_ = fs->make<TTree>("EDBRCandidatesw","EDBR Candidates");
-
+    outTree_->Branch("L1prefiring"           ,&L1prefiring         ,"L1prefiring/D"          );
+    outTree_->Branch("L1prefiringup"           ,&L1prefiringup         ,"L1prefiringup/D"          );
+    outTree_->Branch("L1prefiringdown"           ,&L1prefiringdown         ,"L1prefiringdown/D"          );
     /// Basic event quantities
     if (RunOnMC_){
         outTree_->Branch("pweight"           ,pweight         ,"pweight[212]/D"          );
@@ -561,15 +602,27 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
         outTree_->Branch("phigenwl"           ,phigenwl       ,"phigenwl[5]/D"          );
         outTree_->Branch("massgenwl"           ,massgenwl         ,"massgenwl[5]/D"          );
         outTree_->Branch("taggenwl"           ,taggenwl         ,"taggenwl[5]/D"          );
+        outTree_->Branch("taggenwmother"           ,taggenwmother         ,"taggenwmother[5]/D"          );
+        outTree_->Branch("genw_q1_pt"           ,genw_q1_pt         ,"genw_q1_pt[5]/D"          );
+        outTree_->Branch("genw_q1_phi"           ,genw_q1_phi         ,"genw_q1_phi[5]/D"          );
+        outTree_->Branch("genw_q1_eta"           ,genw_q1_eta         ,"genw_q1_eta[5]/D"          );
+        outTree_->Branch("genw_q1_e"           ,genw_q1_e         ,"genw_q1_e[5]/D"          );
+        outTree_->Branch("genw_q1_pdg"           ,genw_q1_pdg         ,"genw_q1_pdg[5]/D"          );
+        outTree_->Branch("genw_q2_pt"           ,genw_q2_pt         ,"genw_q2_pt[5]/D"          );
+        outTree_->Branch("genw_q2_phi"           ,genw_q2_phi         ,"genw_q2_phi[5]/D"          );
+        outTree_->Branch("genw_q2_eta"           ,genw_q2_eta         ,"genw_q2_eta[5]/D"          );
+        outTree_->Branch("genw_q2_e"           ,genw_q2_e         ,"genw_q2_e[5]/D"          );
+        outTree_->Branch("genw_q2_pdg"           ,genw_q2_pdg         ,"genw_q2_pdg[5]/D"          );
+
         outTree_->Branch("ptgenzl"           ,ptgenzl         ,"ptgenzl[5]/D"          );
         outTree_->Branch("etagenzl"           ,etagenzl         ,"etagenzl[5]/D"          );
         outTree_->Branch("phigenzl"           ,phigenzl       ,"phigenzl[5]/D"          );
         outTree_->Branch("massgenzl"           ,massgenzl         ,"massgenzl[5]/D"          );
         outTree_->Branch("taggenzl"           ,taggenzl         ,"taggenzl[5]/D"          );
-        outTree_->Branch("ptgengl"           ,ptgengl         ,"ptgengl[5]/D"          );
-        outTree_->Branch("etagengl"           ,etagengl         ,"etagengl[5]/D"          );
-        outTree_->Branch("phigengl"           ,phigengl       ,"phigengl[5]/D"          );
-        outTree_->Branch("egengl"           ,egengl         ,"egengl[5]/D"          );
+        outTree_->Branch("ptgengl"           ,ptgengl         ,"ptgengl[10]/D"          );
+        outTree_->Branch("etagengl"           ,etagengl         ,"etagengl[10]/D"          );
+        outTree_->Branch("phigengl"           ,phigengl       ,"phigengl[10]/D"          );
+        outTree_->Branch("egengl"           ,egengl         ,"egengl[10]/D"          );
         outTree_->Branch("ptgenwf"           ,ptgenwf         ,"ptgenwf[5]/D"          );
         outTree_->Branch("etagenwf"           ,etagenwf         ,"etagenwf[5]/D"          );
         outTree_->Branch("phigenwf"           ,phigenwf       ,"phigenwf[5]/D"          );
@@ -578,10 +631,104 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
         outTree_->Branch("etagenzf"           ,etagenzf         ,"etagenzf[5]/D"          );
         outTree_->Branch("phigenzf"           ,phigenzf       ,"phigenzf[5]/D"          );
         outTree_->Branch("massgenzf"           ,massgenzf         ,"massgenzf[5]/D"          );
-        outTree_->Branch("ptgengf"           ,ptgengf         ,"ptgengf[5]/D"          );
-        outTree_->Branch("etagengf"           ,etagengf         ,"etagengf[5]/D"          );
-        outTree_->Branch("phigengf"           ,phigengf       ,"phigengf[5]/D"          );
-        outTree_->Branch("egengf"           ,egengf         ,"egengf[5]/D"          );
+        outTree_->Branch("ptgengf"           ,ptgengf         ,"ptgengf[10]/D"          );
+        outTree_->Branch("etagengf"           ,etagengf         ,"etagengf[10]/D"          );
+        outTree_->Branch("phigengf"           ,phigengf       ,"phigengf[10]/D"          );
+        outTree_->Branch("egengf"           ,egengf         ,"egengf[10]/D"          );
+        
+        outTree_->Branch("gent_b_pt"           ,&gent_b_pt         ,"gent_b_pt/D"          );
+        outTree_->Branch("gent_b_eta"           ,&gent_b_eta         ,"gent_b_eta/D"          );
+        outTree_->Branch("gent_b_phi"           ,&gent_b_phi         ,"gent_b_phi/D"          );
+        outTree_->Branch("gent_b_mass"           ,&gent_b_mass         ,"gent_b_mass/D"          );
+        outTree_->Branch("genantit_b_pt"           ,&genantit_b_pt         ,"genantit_b_pt/D"          );
+        outTree_->Branch("genantit_b_eta"           ,&genantit_b_eta         ,"genantit_b_eta/D"          );
+        outTree_->Branch("genantit_b_phi"           ,&genantit_b_phi         ,"genantit_b_phi/D"          );
+        outTree_->Branch("genantit_b_mass"           ,&genantit_b_mass         ,"genantit_b_mass/D"          );
+        outTree_->Branch("gent_w_pt"           ,&gent_w_pt         ,"gent_w_pt/D"          );
+        outTree_->Branch("gent_w_eta"           ,&gent_w_eta         ,"gent_w_eta/D"          );
+        outTree_->Branch("gent_w_phi"           ,&gent_w_phi         ,"gent_w_phi/D"          );
+        outTree_->Branch("gent_w_mass"           ,&gent_w_mass         ,"gent_w_mass/D"          );
+        outTree_->Branch("genantit_w_pt"           ,&genantit_w_pt         ,"genantit_w_pt/D"          );
+        outTree_->Branch("genantit_w_eta"           ,&genantit_w_eta         ,"genantit_w_eta/D"          );
+        outTree_->Branch("genantit_w_phi"           ,&genantit_w_phi         ,"genantit_w_phi/D"          );
+        outTree_->Branch("genantit_w_mass"           ,&genantit_w_mass         ,"genantit_w_mass/D"          );
+        outTree_->Branch("gent_w_tag"           ,&gent_w_tag         ,"gent_w_tag/D"          );
+        outTree_->Branch("gent_w_q1_pt"           ,&gent_w_q1_pt         ,"gent_w_q1_pt/D"          );
+        outTree_->Branch("gent_w_q1_eta"           ,&gent_w_q1_eta         ,"gent_w_q1_eta/D"          );
+        outTree_->Branch("gent_w_q1_phi"           ,&gent_w_q1_phi         ,"gent_w_q1_phi/D"          );
+        outTree_->Branch("gent_w_q1_e"           ,&gent_w_q1_e         ,"gent_w_q1_e/D"          );
+        outTree_->Branch("gent_w_q1_pdg"           ,&gent_w_q1_pdg         ,"gent_w_q1_pdg/D"          );
+        outTree_->Branch("gent_w_q2_pt"           ,&gent_w_q2_pt         ,"gent_w_q2_pt/D"          );
+        outTree_->Branch("gent_w_q2_eta"           ,&gent_w_q2_eta         ,"gent_w_q2_eta/D"          );
+        outTree_->Branch("gent_w_q2_phi"           ,&gent_w_q2_phi         ,"gent_w_q2_phi/D"          );
+        outTree_->Branch("gent_w_q2_e"           ,&gent_w_q2_e         ,"gent_w_q2_e/D"          );
+        outTree_->Branch("gent_w_q2_pdg"           ,&gent_w_q2_pdg         ,"gent_w_q2_pdg/D"          );
+        outTree_->Branch("genantit_w_tag"           ,&genantit_w_tag         ,"genantit_w_tag/D"          );
+        outTree_->Branch("genantit_w_q1_pt"           ,&genantit_w_q1_pt         ,"genantit_w_q1_pt/D"          );
+        outTree_->Branch("genantit_w_q1_eta"           ,&genantit_w_q1_eta         ,"genantit_w_q1_eta/D"          );
+        outTree_->Branch("genantit_w_q1_phi"           ,&genantit_w_q1_phi         ,"genantit_w_q1_phi/D"          );
+        outTree_->Branch("genantit_w_q1_e"           ,&genantit_w_q1_e         ,"genantit_w_q1_e/D"          );
+        outTree_->Branch("genantit_w_q1_pdg"           ,&genantit_w_q1_pdg         ,"genantit_w_q1_pdg/D"          );
+        outTree_->Branch("genantit_w_q2_pt"           ,&genantit_w_q2_pt         ,"genantit_w_q2_pt/D"          );
+        outTree_->Branch("genantit_w_q2_eta"           ,&genantit_w_q2_eta         ,"genantit_w_q2_eta/D"          );
+        outTree_->Branch("genantit_w_q2_phi"           ,&genantit_w_q2_phi         ,"genantit_w_q2_phi/D"          );
+        outTree_->Branch("genantit_w_q2_e"           ,&genantit_w_q2_e         ,"gent_w_q2_e/D"          );
+        outTree_->Branch("genantit_w_q2_pdg"           ,&genantit_w_q2_pdg         ,"genantit_w_q2_pdg/D"          );
+
+        outTree_->Branch("ptgenq1l"           ,ptgenq1l         ,"ptgenq1l[5]/D"          );
+        outTree_->Branch("etagenq1l"           ,etagenq1l         ,"etagenq1l[5]/D"          );
+        outTree_->Branch("phigenq1l"           ,phigenq1l       ,"phigenq1l[5]/D"          );
+        outTree_->Branch("egenq1l"           ,egenq1l         ,"egenq1l[5]/D"          );
+        outTree_->Branch("ptgenq1f"           ,ptgenq1f         ,"ptgenq1f[5]/D"          );
+        outTree_->Branch("etagenq1f"           ,etagenq1f         ,"etagenq1f[5]/D"          );
+        outTree_->Branch("phigenq1f"           ,phigenq1f       ,"phigenq1f[5]/D"          );
+        outTree_->Branch("egenq1f"           ,egenq1f         ,"egenq1f[5]/D"          );
+        outTree_->Branch("ptgenq2l"           ,ptgenq2l         ,"ptgenq2l[5]/D"          );
+        outTree_->Branch("etagenq2l"           ,etagenq2l         ,"etagenq2l[5]/D"          );
+        outTree_->Branch("phigenq2l"           ,phigenq2l       ,"phigenq2l[5]/D"          );
+        outTree_->Branch("egenq2l"           ,egenq2l         ,"egenq2l[5]/D"          );
+        outTree_->Branch("ptgenq2f"           ,ptgenq2f         ,"ptgenq2f[5]/D"          );
+        outTree_->Branch("etagenq2f"           ,etagenq2f         ,"etagenq2f[5]/D"          );
+        outTree_->Branch("phigenq2f"           ,phigenq2f       ,"phigenq2f[5]/D"          );
+        outTree_->Branch("egenq2f"           ,egenq2f         ,"egenq2f[5]/D"          );
+        outTree_->Branch("ptgenq3l"           ,ptgenq3l         ,"ptgenq3l[5]/D"          );
+        outTree_->Branch("etagenq3l"           ,etagenq3l         ,"etagenq3l[5]/D"          );
+        outTree_->Branch("phigenq3l"           ,phigenq3l       ,"phigenq3l[5]/D"          );
+        outTree_->Branch("egenq3l"           ,egenq3l         ,"egenq3l[5]/D"          );
+        outTree_->Branch("ptgenq3f"           ,ptgenq3f         ,"ptgenq3f[5]/D"          );
+        outTree_->Branch("etagenq3f"           ,etagenq3f         ,"etagenq3f[5]/D"          );
+        outTree_->Branch("phigenq3f"           ,phigenq3f       ,"phigenq3f[5]/D"          );
+        outTree_->Branch("egenq3f"           ,egenq3f         ,"egenq3f[5]/D"          );
+        outTree_->Branch("ptgenq4l"           ,ptgenq4l         ,"ptgenq4l[5]/D"          );
+        outTree_->Branch("etagenq4l"           ,etagenq4l         ,"etagenq4l[5]/D"          );
+        outTree_->Branch("phigenq4l"           ,phigenq4l       ,"phigenq4l[5]/D"          );
+        outTree_->Branch("egenq4l"           ,egenq4l         ,"egenq4l[5]/D"          );
+        outTree_->Branch("ptgenq4f"           ,ptgenq4f         ,"ptgenq4f[5]/D"          );
+        outTree_->Branch("etagenq4f"           ,etagenq4f         ,"etagenq4f[5]/D"          );
+        outTree_->Branch("phigenq4f"           ,phigenq4f       ,"phigenq4f[5]/D"          );
+        outTree_->Branch("egenq4f"           ,egenq4f         ,"egenq4f[5]/D"          );
+        outTree_->Branch("ptgenq5l"           ,ptgenq5l         ,"ptgenq5l[5]/D"          );
+        outTree_->Branch("etagenq5l"           ,etagenq5l         ,"etagenq5l[5]/D"          );
+        outTree_->Branch("phigenq5l"           ,phigenq5l       ,"phigenq5l[5]/D"          );
+        outTree_->Branch("egenq5l"           ,egenq5l         ,"egenq5l[5]/D"          );
+        outTree_->Branch("ptgenq5f"           ,ptgenq5f         ,"ptgenq5f[5]/D"          );
+        outTree_->Branch("etagenq5f"           ,etagenq5f         ,"etagenq5f[5]/D"          );
+        outTree_->Branch("phigenq5f"           ,phigenq5f       ,"phigenq5f[5]/D"          );
+        outTree_->Branch("egenq5f"           ,egenq5f         ,"egenq5f[5]/D"          );
+        outTree_->Branch("mothergenq1f"           ,mothergenq1f         ,"mothergenq1f[5]/D"          );
+        outTree_->Branch("mothergenq2f"           ,mothergenq2f         ,"mothergenq2f[5]/D"          );
+        outTree_->Branch("mothergenq3f"           ,mothergenq3f         ,"mothergenq3f[5]/D"          );
+        outTree_->Branch("mothergenq4f"           ,mothergenq4f         ,"mothergenq4f[5]/D"          );
+        outTree_->Branch("mothergenq5f"           ,mothergenq5f         ,"mothergenq5f[5]/D"          );
+        
+        outTree_->Branch("mothergengf"           ,mothergengf         ,"mothergengf[10]/D"          );
+        outTree_->Branch("mmothergengf"           ,mmothergengf         ,"mmothergengf[10]/D"          );
+
+        outTree_->Branch("mmothergenq1f"           ,mmothergenq1f         ,"mmothergenq1f[5]/D"          );
+        outTree_->Branch("mmothergenq2f"           ,mmothergenq2f         ,"mmothergenq2f[5]/D"          );
+        outTree_->Branch("mmothergenq3f"           ,mmothergenq3f         ,"mmothergenq3f[5]/D"          );
+        outTree_->Branch("mmothergenq4f"           ,mmothergenq4f         ,"mmothergenq4f[5]/D"          );
+        outTree_->Branch("mmothergenq5f"           ,mmothergenq5f         ,"mmothergenq5f[5]/D"          );
 
     }
     outTree_->Branch("run"             ,&run            ,"run/I");//
@@ -856,6 +1003,7 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
     outTree_->Branch("passFilter_EEBadSc"              ,&passFilter_EEBadSc_             ,"passFilter_EEBadSc_/O");
     outTree_->Branch("passFilter_badMuon"                 ,&passFilter_badMuon_                ,"passFilter_badMuon_/O");
     outTree_->Branch("passFilter_badChargedHadron"                 ,&passFilter_badChargedHadron_                ,"passFilter_badChargedHadron_/O");
+    outTree_->Branch("passecalBadCalibFilterUpdate"                 ,&passecalBadCalibFilterUpdate_                ,"passecalBadCalibFilterUpdate_/O");
 
     /// AK4 Jets Info
     outTree_->Branch("ak4jet_hf"        , ak4jet_hf       ,"ak4jet_hf[8]/I"       );
@@ -1088,7 +1236,7 @@ const reco::Candidate*  EDBRTreeMaker::findLasttau(const reco::Candidate *partic
         pw = particle->daughter(iw);
         //cout<<"check 5 "<<pw->pdgId()<<"    "<<pw->status()<<"   "<<endl;
         
-        return (findLastW(pw,IDpdg));
+        return (findLasttau(pw,IDpdg));
     }
     //cout<<"check 3 "<<pw->pdgId()<<"    "<<pw->status()<<"   "<<pw->daughter(0)->pdgId()<<"    "<<endl;
     return pw;
@@ -1117,37 +1265,42 @@ EDBRTreeMaker::~EDBRTreeMaker()
 bool
 EDBRTreeMaker::looseJetID( const pat::Jet& j ) {
     // refer to https://twiki.cern.ch/twiki/bin/view/CMS/JetID#Recommendations_for_13_TeV_data
-	double NHF = j.neutralHadronEnergyFraction();
-	double NEMF = j.neutralEmEnergyFraction();
-	double CHF = j.chargedHadronEnergyFraction();
-	//double MUF = j.muonEnergyFraction();
-	double CEMF = j.chargedEmEnergyFraction();
-	int NumConst = j.chargedMultiplicity()+j.neutralMultiplicity();
-	int NumNeutralParticle =j.neutralMultiplicity();
-	int CHM = j.chargedMultiplicity(); 
-	double eta = j.eta();
-    //	return (( (NHF<0.99 && NEMF<0.99 && NumConst>1) && ((abs(eta)<=2.4 && CHF>0 && CHM>0 && CEMF<0.99) || abs(eta)>2.4) && abs(eta)<=3.0  ) || (NEMF<0.90 && NumNeutralParticle>10 && abs(eta)>3.0) );
-
-    return ((  (NHF<0.99 && NEMF<0.99 && NumConst>1) && ((abs(eta)<=2.4 && CHF>0 && CHM>0 && CEMF<0.99) || abs(eta)>2.4) && abs(eta)<=2.7 ) || (NHF<0.98 && NEMF>0.01 && NumNeutralParticle>2 && abs(eta)>2.7 && abs(eta)<=3.0 ) || (NEMF<0.90 && NumNeutralParticle>10 && abs(eta)>3.0) ) ;
+    double NHF = j.neutralHadronEnergyFraction();
+    double NEMF = j.neutralEmEnergyFraction();
+    double CHF = j.chargedHadronEnergyFraction();
+    //double MUF = j.muonEnergyFraction();
+    double CEMF = j.chargedEmEnergyFraction();
+    int NumConst = j.chargedMultiplicity()+j.neutralMultiplicity();
+    int NumNeutralParticle =j.neutralMultiplicity();
+    int CHM = j.chargedMultiplicity();
+    double eta = j.eta();
+	return ( (NHF<0.90 && NEMF<0.90 && NumConst>1) && ((abs(eta)<=2.4 && CHF>0 && CHM>0 && CEMF<0.99) || abs(eta)>2.4) && abs(eta)<=3.0 ) || (NEMF<0.90 && NumNeutralParticle>10 && abs(eta)>3.0 )  ;
 }
 
 bool
 EDBRTreeMaker::tightJetID( const pat::Jet& j ) {
     // refer to https://twiki.cern.ch/twiki/bin/view/CMS/JetID#Recommendations_for_13_TeV_data
+    if(j.pt()>170.){
     double NHF = j.neutralHadronEnergyFraction();
     double NEMF = j.neutralEmEnergyFraction();
     double CHF = j.chargedHadronEnergyFraction();
     //double MUF = j.muonEnergyFraction();
+    //double CEMF = j.chargedEmEnergyFraction();
     int NumConst = j.chargedMultiplicity()+j.neutralMultiplicity();
     int NumNeutralParticle =j.neutralMultiplicity();
     int CHM = j.chargedMultiplicity();
     double eta = j.eta();
     return ((  (NHF<0.90 && NEMF<0.90 && NumConst>1) && ((abs(eta)<=2.4 && CHF>0 && CHM>0 ) || abs(eta)>2.4) && abs(eta)<=2.7 ) || (NHF<0.99 && NEMF>0.02 && NumNeutralParticle>2 && abs(eta)>2.7 && abs(eta)<=3.0 ) || (NEMF<0.90 && NHF>0.02 &&NumNeutralParticle>10 && abs(eta)>3.0) ) ;
 }
+else{
+return (0);
+    }
+}
 
 bool
 EDBRTreeMaker::tightJetIDpuppi( const pat::Jet& j ) {
     // refer to https://twiki.cern.ch/twiki/bin/view/CMS/JetID#Recommendations_for_13_TeV_data
+    if(j.pt()>170.){
     double NHF = j.neutralHadronEnergyFraction();
     double NEMF = j.neutralEmEnergyFraction();
     double CHF = j.chargedHadronEnergyFraction();
@@ -1156,13 +1309,19 @@ EDBRTreeMaker::tightJetIDpuppi( const pat::Jet& j ) {
     int NumNeutralParticle =j.neutralMultiplicity();
     int CHM = j.chargedMultiplicity();
     double eta = j.eta();
-    return ((  (NHF<0.90 && NEMF<0.90 && NumConst>1) && ((abs(eta)<=2.4 && CHF>0 && CHM>0 ) || abs(eta)>2.4) && abs(eta)<=2.7 ) || (NHF<0.99 && abs(eta)>2.7 && abs(eta)<=3.0 ) || (NEMF<0.90 && NHF>0.02 &&NumNeutralParticle>2 && NumNeutralParticle<15 && abs(eta)>3.0) ) ;
+    return ((  (NHF<0.90 && NEMF<0.90 && NumConst>1) && ((abs(eta)<=2.4 && CHF>0 && CHM>0 ) || (abs(eta)>2.4 && abs(eta)<=2.7) )) || (NHF<0.99 && abs(eta)>2.7 && abs(eta)<=3.0 ) || (NEMF<0.90 && NHF>0.02 &&NumNeutralParticle>2 && NumNeutralParticle<15 && abs(eta)>3.0) ) ;
+}
+else{
+return (0);
+    }
 }
 
 float
 EDBRTreeMaker::dEtaInSeed( const pat::Electron*  ele ){
     return ele->superCluster().isNonnull() && ele->superCluster()->seed().isNonnull() ? ele->deltaEtaSuperClusterTrackAtVtx() - ele->superCluster()->eta() + ele->superCluster()->seed()->eta() : std::numeric_limits<float>::max();
+
 }
+
 
 void EDBRTreeMaker::initJetCorrFactors( void ){
     std::vector<JetCorrectorParameters> vPar;
@@ -1603,6 +1762,18 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     //iEvent.getByLabel("slimmedElectrons",eles);
     iEvent.getByToken(EleSrc_, eles);
     if (RunOnSig_||RunOnMC_){
+        //  L1 prefiring
+        edm::Handle< double > theprefweight;
+        iEvent.getByToken(prefweight_token, theprefweight ) ;
+        L1prefiring =(*theprefweight);
+        edm::Handle< double > theprefweightup;
+        iEvent.getByToken(prefweightup_token, theprefweightup ) ;
+        L1prefiringup =(*theprefweightup);
+        
+        edm::Handle< double > theprefweightdown;
+        iEvent.getByToken(prefweightdown_token, theprefweightdown ) ;
+        L1prefiringdown =(*theprefweightdown);
+        
         edm::Handle<LHEEventProduct> wgtsource;
         iEvent.getByToken(LheToken_, wgtsource);
         //std::cout<<"weight number "<<wgtsource->weights().size()<<std::endl;
@@ -1646,7 +1817,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         theWeight = genEvtInfo->weight();
         if(theWeight>0) nump = nump+1;
         if(theWeight<0) numm = numm+1;
-//cout<<theWeight<<endl;
+	//cout<<theWeight<<endl;
         edm::Handle<std::vector<PileupSummaryInfo>>  PupInfo;
         //iEvent.getByLabel(edm::InputTag("slimmedAddPileupInfo"), PupInfo);
         iEvent.getByToken(PUToken_, PupInfo);
@@ -1685,6 +1856,9 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
     iEvent.getByToken(badChargedHadron_Selector_, badChargedHadronResultHandle);
     passFilter_badMuon_ = *badMuonResultHandle;
     passFilter_badChargedHadron_ = *badChargedHadronResultHandle;
+    edm::Handle< bool > passecalBadCalibFilterUpdate ;
+    iEvent.getByToken(ecalBadCalibFilterUpdate_token,passecalBadCalibFilterUpdate);
+    passecalBadCalibFilterUpdate_ =  (*passecalBadCalibFilterUpdate );
  
     numCands = gravitons->size();
  
@@ -1694,17 +1868,120 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         Int_t havegra=0;
         for(size_t ik=0; ik<genParticles->size();ik++)
         {// loop on gen
-            const reco::Candidate* ptop = &(*genParticles)[ik];
-                if(ptop->pdgId()== 6) {
+            const reco::Candidate* ptop0 = &(*genParticles)[ik];
+            const reco::Candidate* ptop=findLasttau(ptop0,6);
+                if(ptop0->pdgId()== 6 && gentop_pt==-99) {
                     gentop_pt = ptop->pt();
                     gentop_eta = ptop->eta();
                     gentop_phi = ptop->phi();
-                    gentop_mass = ptop->mass(); }
-                if(ptop->pdgId()== -6) {
+                    gentop_mass = ptop->mass();
+                    for(int i=0;ptop->daughter(i)!=NULL;i++){
+                        //if(abs(ptop->daughter(0)->pdgId())!=24&&abs(ptop->daughter(1)->pdgId())!=5) cout<<"no bW  "<<i<<"   "<<ptop->daughter(i)->pdgId()<<"   "<<ptop->daughter(i)->status()<<endl;
+                        if(abs(ptop->daughter(i)->pdgId())==24){
+                            gent_w_pt=ptop->daughter(i)->pt();
+                            gent_w_eta=ptop->daughter(i)->eta();
+                            gent_w_phi=ptop->daughter(i)->phi();
+                            gent_w_mass=ptop->daughter(i)->mass();
+                            const reco::Candidate* ptw0 = ptop->daughter(i);
+                            const reco::Candidate* ptw= findLastW(ptw0,24);
+                            if(ptw->daughter(0)!=NULL)
+                            {
+                                //if(abs(ptw->daughter(0)->pdgId())>=5) cout<<"no W-qq   "<<ptw->daughter(0)->pdgId()<<"   "<<ptw->daughter(1)->pdgId()<<endl;
+                                if( abs(ptw->daughter(0)->pdgId())<=6 ){
+                                    gent_w_tag=4;
+                                    gent_w_q1_pt=ptw->daughter(0)->pt();
+                                    gent_w_q1_eta=ptw->daughter(0)->eta();
+                                    gent_w_q1_phi=ptw->daughter(0)->phi();
+                                    gent_w_q1_e=ptw->daughter(0)->energy();
+                                    gent_w_q1_pdg=ptw->daughter(0)->pdgId();
+                                    gent_w_q2_pt=ptw->daughter(1)->pt();
+                                    gent_w_q2_eta=ptw->daughter(1)->eta();
+                                    gent_w_q2_phi=ptw->daughter(1)->phi();
+                                    gent_w_q2_e=ptw->daughter(1)->energy();
+                                    gent_w_q2_pdg=ptw->daughter(1)->pdgId();
+                                }
+                                if( abs(ptw->daughter(0)->pdgId())==11 ||abs(ptw->daughter(0)->pdgId())==12 ) gent_w_tag=1;
+                                if( abs(ptw->daughter(0)->pdgId())==12 ||abs(ptw->daughter(0)->pdgId())==13 ) gent_w_tag=2;
+                                if( abs(ptw->daughter(0)->pdgId())==14 ||abs(ptw->daughter(0)->pdgId())==15 ) gent_w_tag=3;
+                                if( abs(ptw->daughter(0)->pdgId())==11 ||abs(ptw->daughter(0)->pdgId())==12||abs(ptw->daughter(0)->pdgId())==13 ||abs(ptw->daughter(0)->pdgId())==14||abs(ptw->daughter(0)->pdgId())==15 ||abs(ptw->daughter(0)->pdgId())==16)
+                                {
+                                    gent_w_q1_pt=ptw->daughter(0)->pt();
+                                    gent_w_q1_eta=ptw->daughter(0)->eta();
+                                    gent_w_q1_phi=ptw->daughter(0)->phi();
+                                    gent_w_q1_e=ptw->daughter(0)->energy();
+                                    gent_w_q1_pdg=ptw->daughter(0)->pdgId();
+                                    gent_w_q2_pt=ptw->daughter(1)->pt();
+                                    gent_w_q2_eta=ptw->daughter(1)->eta();
+                                    gent_w_q2_phi=ptw->daughter(1)->phi();
+                                    gent_w_q2_e=ptw->daughter(1)->energy();
+                                    gent_w_q2_pdg=ptw->daughter(1)->pdgId();
+                                }
+                        }
+                        }
+                        if(abs(ptop->daughter(i)->pdgId())==5){
+                            gent_b_pt=ptop->daughter(i)->pt();
+                            gent_b_eta=ptop->daughter(i)->eta();
+                            gent_b_phi=ptop->daughter(i)->phi();
+                            gent_b_mass=ptop->daughter(i)->mass();
+                        }
+                }
+                }
+                if(ptop0->pdgId()== -6 && genantitop_pt==-99) {
                     genantitop_pt = ptop->pt();
                     genantitop_eta = ptop->eta();
                     genantitop_phi = ptop->phi();
-                    genantitop_mass = ptop->mass();}
+                    genantitop_mass = ptop->mass();
+                    for(int i=0;ptop->daughter(i)!=NULL;i++){
+                        //cout<<i<<"   "<<ptop->daughter(i)->pdgId()<<"   "<<ptop->daughter(i)->status()<<endl;
+                        if(abs(ptop->daughter(i)->pdgId())==24){
+                            genantit_w_pt=ptop->daughter(i)->pt();
+                            genantit_w_eta=ptop->daughter(i)->eta();
+                            genantit_w_phi=ptop->daughter(i)->phi();
+                            genantit_w_mass=ptop->daughter(i)->mass();
+                            const reco::Candidate* ptw0 = ptop->daughter(i);
+                            const reco::Candidate* ptw= findLastW(ptw0,24);
+                            if(ptw->daughter(0)!=NULL)
+                            {
+                                if( abs(ptw->daughter(0)->pdgId())<=6 ){
+                                    genantit_w_tag=4;
+                                    genantit_w_q1_pt=ptw->daughter(0)->pt();
+                                    genantit_w_q1_eta=ptw->daughter(0)->eta();
+                                    genantit_w_q1_phi=ptw->daughter(0)->phi();
+                                    genantit_w_q1_e=ptw->daughter(0)->energy();
+                                    genantit_w_q1_pdg=ptw->daughter(0)->pdgId();
+                                    genantit_w_q2_pt=ptw->daughter(1)->pt();
+                                    genantit_w_q2_eta=ptw->daughter(1)->eta();
+                                    genantit_w_q2_phi=ptw->daughter(1)->phi();
+                                    genantit_w_q2_e=ptw->daughter(1)->energy();
+                                    genantit_w_q2_pdg=ptw->daughter(1)->pdgId();
+                                }
+                                if( abs(ptw->daughter(0)->pdgId())==11 ||abs(ptw->daughter(0)->pdgId())==12 ) genantit_w_tag=1;
+                                if( abs(ptw->daughter(0)->pdgId())==12 ||abs(ptw->daughter(0)->pdgId())==13 ) genantit_w_tag=2;
+                                if( abs(ptw->daughter(0)->pdgId())==14 ||abs(ptw->daughter(0)->pdgId())==15 ) genantit_w_tag=3;
+                                if( abs(ptw->daughter(0)->pdgId())==11 ||abs(ptw->daughter(0)->pdgId())==12||abs(ptw->daughter(0)->pdgId())==13 ||abs(ptw->daughter(0)->pdgId())==14||abs(ptw->daughter(0)->pdgId())==15 ||abs(ptw->daughter(0)->pdgId())==16)
+                                {
+                                    genantit_w_q1_pt=ptw->daughter(0)->pt();
+                                    genantit_w_q1_eta=ptw->daughter(0)->eta();
+                                    genantit_w_q1_phi=ptw->daughter(0)->phi();
+                                    genantit_w_q1_e=ptw->daughter(0)->energy();
+                                    genantit_w_q1_pdg=ptw->daughter(0)->pdgId();
+                                    genantit_w_q2_pt=ptw->daughter(1)->pt();
+                                    genantit_w_q2_eta=ptw->daughter(1)->eta();
+                                    genantit_w_q2_phi=ptw->daughter(1)->phi();
+                                    genantit_w_q2_e=ptw->daughter(1)->energy();
+                                    genantit_w_q2_pdg=ptw->daughter(1)->pdgId();
+                                }
+                            }
+                        }
+                        if(abs(ptop->daughter(i)->pdgId())==5){
+                            genantit_b_pt=ptop->daughter(i)->pt();
+                            genantit_b_eta=ptop->daughter(i)->eta();
+                            genantit_b_phi=ptop->daughter(i)->phi();
+                            genantit_b_mass=ptop->daughter(i)->mass();
+                        }
+                    }
+                }
+                
             //if((abs((*genParticles)[ik].pdgId())!=24)&&(abs((*genParticles)[ik].pdgId())!=9000024)&&(abs((*genParticles)[ik].pdgId())!=9000025))
             //cout<<"(*genParticles)[ik]->pdgId() "<<(*genParticles)[ik].pdgId()<<endl;
             if( abs((*genParticles)[ik].pdgId())==9000024|| abs((*genParticles)[ik].pdgId())==6) havegra=1;
@@ -2199,7 +2476,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                     const reco::Candidate* pwtmp1 = &(*genParticles)[ik];
                     const reco::Candidate* pwtmp=findLastW(pwtmp1,24);
                     //const reco::Candidate* pwtmp2=findLasttau(pwtmp1,24);
-                    //cout<<pwtmp->pt()<<"   "<<pwtmp2->pt()<<endl;
+                    //cout<<"genw"<<pwtmp->pt()<<"   "<<pwtmp1->pt()<<endl;
                     int woverlap=0;
                     for (int ia=0;ia<igenw;ia++){
                         if(pwtmp->pt()==ptgenwl[ia]) woverlap=1;
@@ -2214,6 +2491,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                     etagenwf[igenw] = pwtmp2->eta();
                     phigenwf[igenw] = pwtmp2->phi();
                     massgenwf[igenw] = pwtmp2->mass();
+                        taggenwmother[igenw]=pwtmp2->mother(0)->pdgId();
                         /*cout<<ptgenwl[igenw]<<"   "<<ptgenwf[igenw]<<phigenwl[igenw]<<"   "<<phigenwf[igenw]<<"   "<<etagenwl[igenw]<<"   "<<etagenwf[igenw]<<" h0  "<<endl;
                         if(ptgenwl[igenw]!=ptgenwf[igenw] && pwtmp2->daughter(0)!=NULL) {cout<<phigenwl[igenw]<<"   "<<phigenwf[igenw]<<"   "<<etagenwl[igenw]<<"   "<<etagenwf[igenw]<<"  "<<pwtmp2->daughter(0)->pdgId()<<" h1  "<<endl;}
                         if(ptgenwl[igenw]!=ptgenwf[igenw] && pwtmp2->daughter(0)!=NULL&& pwtmp2->daughter(1)!=NULL) {cout<<phigenwl[igenw]<<"   "<<phigenwf[igenw]<<"   "<<etagenwl[igenw]<<"   "<<etagenwf[igenw]<<pwtmp2->daughter(0)->pdgId()<<"   ";
@@ -2230,20 +2508,46 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                         if( (abs(pltmp->pdgId())==15) || (abs(pltmp->pdgId())==16) ){
                             taggenwl[igenw]=3;                    }//end of w daugter loop
                         if(abs(pltmp->pdgId())<6 ) {
-                            taggenwl[igenw]=4;}
+                            taggenwl[igenw]=4;
+                            genw_q1_pt[igenw]=pwtmp->daughter(0)->pt();
+                            genw_q1_eta[igenw]=pwtmp->daughter(0)->eta();
+                            genw_q1_phi[igenw]=pwtmp->daughter(0)->phi();
+                            genw_q1_e[igenw]=pwtmp->daughter(0)->energy();
+                            genw_q1_pdg[igenw]=pwtmp->daughter(0)->pdgId();
+                            genw_q2_pt[igenw]=pwtmp->daughter(1)->pt();
+                            genw_q2_eta[igenw]=pwtmp->daughter(1)->eta();
+                            genw_q2_phi[igenw]=pwtmp->daughter(1)->phi();
+                            genw_q2_e[igenw]=pwtmp->daughter(1)->energy();
+                            genw_q2_pdg[igenw]=pwtmp->daughter(1)->pdgId();
+                            //cout<<"w_q  "<<igenw<<"  "<<pwtmp->daughter(0)->pt()<<"   "<<pwtmp->daughter(1)->pt()<<endl;
+                            }
+                        if( (abs(pltmp->pdgId())==11) || (abs(pltmp->pdgId())==12) ||(abs(pltmp->pdgId())==13) || (abs(pltmp->pdgId())==14) ||(abs(pltmp->pdgId())==15) || (abs(pltmp->pdgId())==16)){
+                            genw_q1_pt[igenw]=pwtmp->daughter(0)->pt();
+                            genw_q1_eta[igenw]=pwtmp->daughter(0)->eta();
+                            genw_q1_phi[igenw]=pwtmp->daughter(0)->phi();
+                            genw_q1_e[igenw]=pwtmp->daughter(0)->energy();
+                            genw_q1_pdg[igenw]=pwtmp->daughter(0)->pdgId();
+                            genw_q2_pt[igenw]=pwtmp->daughter(1)->pt();
+                            genw_q2_eta[igenw]=pwtmp->daughter(1)->eta();
+                            genw_q2_phi[igenw]=pwtmp->daughter(1)->phi();
+                            genw_q2_e[igenw]=pwtmp->daughter(1)->energy();
+                            genw_q2_pdg[igenw]=pwtmp->daughter(1)->pdgId();
+
+                        }
                     }
                     igenw+=1;
                     }
                 }//end of if w
 
         }
+
         int igenz=0;
         for(size_t ik=0; ik<genParticles->size();ik++)
         {
             if(abs((*genParticles)[ik].pdgId())==23)
             {
                 const reco::Candidate* pztmp1 = &(*genParticles)[ik];
-                const reco::Candidate* pztmp=findLastW(pztmp1,23);
+                const reco::Candidate* pztmp=findLasttau(pztmp1,23);
                 //const reco::Candidate* pztmp2=findLasttau(pztmp1,24);
                 //cout<<pztmp->pt()<<"   "<<pztmp2->pt()<<endl;
                 int zoverlap=0;
@@ -2277,7 +2581,9 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 }
             }//end of if w
         }
+
         int igeng=0;
+        int sizeg=10;
         for(size_t ik=0; ik<genParticles->size();ik++)
         {
             //std::cout<<(*genParticles)[ik].pdgId()<<" "<<(*genParticles)[ik].status()<<std::endl;
@@ -2287,27 +2593,191 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             if(abs((*genParticles)[ik].pdgId())==21)
             {
                 const reco::Candidate* pgtmp1 = &(*genParticles)[ik];
-                const reco::Candidate* pgtmp=findLastW(pgtmp1,21);
+                const reco::Candidate* pgtmp=findLasttau(pgtmp1,21);
                 int goverlap=0;
                 for (int ia=0;ia<igeng;ia++){
                     if(pgtmp->pt()==ptgengl[ia]) goverlap=1;}
-                if(pgtmp->pt()>50&&igeng<sizew&&goverlap==0){
+                if(pgtmp->pt()>50&&igeng<sizeg&&goverlap==0){
                     ptgengl[igeng] = pgtmp->pt();
                     etagengl[igeng] = pgtmp->eta();
                     phigengl[igeng] = pgtmp->phi();
                     egengl[igeng] = pgtmp->energy();
-                    const reco::Candidate* pgtmp2=findFirstW(pgtmp1,21);
+                    const reco::Candidate* pgtmp2=findFirstW(pgtmp,21);
                     ptgengf[igeng] = pgtmp2->pt();
                     etagengf[igeng] = pgtmp2->eta();
                     phigengf[igeng] = pgtmp2->phi();
                     egengf[igeng] = pgtmp2->energy();
+                    mothergengf[igeng] = pgtmp2->mother(0)->pdgId();
+                    const reco::Candidate* pgtmp3=findLasttau(pgtmp2->mother(0),pgtmp2->mother(0)->pdgId());
+                    if (pgtmp3->mother(0)!=NULL) mmothergengf[igeng] = pgtmp3->mother(0)->pdgId();
+                    //cout<<pgtmp2->pdgId()<<"    "<<pgtmp2->mother(0)->pdgId()<<"  "<<mmothergengf[igeng]<<endl;
                     igeng+=1;
                 }
             }//end of if w
             
         }
+     
+        int igenq1=0;
+        int sizeq1=5;
+        for(size_t ik=0; ik<genParticles->size();ik++)
+        {
+                if(abs((*genParticles)[ik].pdgId())==1)
+                {
+                    const reco::Candidate* pgtmp1 = &(*genParticles)[ik];
+                    const reco::Candidate* pgtmp=findLasttau(pgtmp1,1);
+                    int goverlap=0;
+                    for (int ia=0;ia<igenq1;ia++){
+                        if(pgtmp->pt()==ptgenq1l[ia]) goverlap=1;}
+                    const reco::Candidate* pgtmp2=findFirstW(pgtmp,1);
+                    if(pgtmp->pt()>50&&igenq1<sizeq1&&goverlap==0&&abs(pgtmp2->mother(0)->pdgId())!=24){
+                        ptgenq1l[igenq1] = pgtmp->pt();
+                        etagenq1l[igenq1] = pgtmp->eta();
+                        phigenq1l[igenq1] = pgtmp->phi();
+                        egenq1l[igenq1] = pgtmp->energy();
+                        ptgenq1f[igenq1] = pgtmp2->pt();
+                        etagenq1f[igenq1] = pgtmp2->eta();
+                        phigenq1f[igenq1] = pgtmp2->phi();
+                        egenq1f[igenq1] = pgtmp2->energy();
+                        mothergenq1f[igenq1] = pgtmp2->mother(0)->pdgId();
+                        const reco::Candidate* pgtmp3=findLasttau(pgtmp2->mother(0),pgtmp2->mother(0)->pdgId());
+                        if (pgtmp3->mother(0)!=NULL) mmothergenq1f[igenq1] = pgtmp3->mother(0)->pdgId();
+                        //cout<<pgtmp2->pdgId()<<"    "<<pgtmp2->mother(0)->pdgId()<<"  "<<mmothergenq1f[igenq1]<<endl;
+                        igenq1+=1;
+                        //cout<<"q1   "<<igenq1<<"   "<<pgtmp2->pdgId()<<"   "<<pgtmp->mother(0)->pdgId()<<"   "<<pgtmp->pt()<<"   "<<pgtmp2->pt()<<"   "<<genantit_w_q1_pt<<"  "<<genantit_w_q2_pt<<"   "<<gent_w_q1_pt<<"  "<<gent_w_q2_pt<<endl;
+                    }
+            }
+        }
 
-        //cout<<igenw<<"  "<<igenz<<"  "<<igeng<<"  "<<endl;
+            int igenq2=0;
+            int sizeq2=5;
+            for(size_t ik=0; ik<genParticles->size();ik++)
+            {
+                if(abs((*genParticles)[ik].pdgId())==2)
+                {
+                    const reco::Candidate* pgtmp1 = &(*genParticles)[ik];
+                    const reco::Candidate* pgtmp=findLasttau(pgtmp1,2);
+                    int goverlap=0;
+                    for (int ia=0;ia<igenq2;ia++){
+                        if(pgtmp->pt()==ptgenq2l[ia]) goverlap=1;}
+                    const reco::Candidate* pgtmp2=findFirstW(pgtmp1,2);
+                    if(pgtmp->pt()>50&&igenq2<sizeq2&&goverlap==0&&abs(pgtmp2->mother(0)->pdgId())!=24){
+                        ptgenq2l[igenq2] = pgtmp->pt();
+                        etagenq2l[igenq2] = pgtmp->eta();
+                        phigenq2l[igenq2] = pgtmp->phi();
+                        egenq2l[igenq2] = pgtmp->energy();
+                        ptgenq2f[igenq2] = pgtmp2->pt();
+                        etagenq2f[igenq2] = pgtmp2->eta();
+                        phigenq2f[igenq2] = pgtmp2->phi();
+                        egenq2f[igenq2] = pgtmp2->energy();
+                        mothergenq2f[igenq2] = pgtmp2->mother(0)->pdgId();
+                        const reco::Candidate* pgtmp3=findLasttau(pgtmp2->mother(0),pgtmp2->mother(0)->pdgId());
+                        if (pgtmp3->mother(0)!=NULL) mmothergenq2f[igenq2] = pgtmp3->mother(0)->pdgId();
+                        //cout<<pgtmp2->pdgId()<<"    "<<pgtmp2->mother(0)->pdgId()<<"  "<<mmothergenq2f[igenq2]<<endl;
+                        igenq2+=1;
+                    }
+                }
+            }
+
+            int igenq3=0;
+            int sizeq3=5;
+            for(size_t ik=0; ik<genParticles->size();ik++)
+            {
+                if(abs((*genParticles)[ik].pdgId())==3)
+                {
+                    const reco::Candidate* pgtmp1 = &(*genParticles)[ik];
+                    const reco::Candidate* pgtmp=findLasttau(pgtmp1,3);
+                    int goverlap=0;
+                    for (int ia=0;ia<igenq3;ia++){
+                        if(pgtmp->pt()==ptgenq3l[ia]) goverlap=1;}
+                    const reco::Candidate* pgtmp2=findFirstW(pgtmp1,3);
+                    if(pgtmp->pt()>50&&igenq3<sizeq3&&goverlap==0&&abs(pgtmp2->mother(0)->pdgId())!=24){
+                        ptgenq3l[igenq3] = pgtmp->pt();
+                        etagenq3l[igenq3] = pgtmp->eta();
+                        phigenq3l[igenq3] = pgtmp->phi();
+                        egenq3l[igenq3] = pgtmp->energy();
+                        ptgenq3f[igenq3] = pgtmp2->pt();
+                        etagenq3f[igenq3] = pgtmp2->eta();
+                        phigenq3f[igenq3] = pgtmp2->phi();
+                        egenq3f[igenq3] = pgtmp2->energy();
+                        mothergenq3f[igenq3] = pgtmp2->mother(0)->pdgId();
+                        const reco::Candidate* pgtmp3=findLasttau(pgtmp2->mother(0),pgtmp2->mother(0)->pdgId());
+                        if (pgtmp3->mother(0)!=NULL) mmothergenq3f[igenq3] = pgtmp3->mother(0)->pdgId();
+                        //cout<<pgtmp2->pdgId()<<"    "<<pgtmp2->mother(0)->pdgId()<<"  "<<mmothergenq3f[igenq3]<<endl;
+                        igenq3+=1;
+                    }
+                }
+            }
+
+            int igenq4=0;
+            int sizeq4=5;
+            for(size_t ik=0; ik<genParticles->size();ik++)
+            {
+                if(abs((*genParticles)[ik].pdgId())==4)
+                {
+                    const reco::Candidate* pgtmp1 = &(*genParticles)[ik];
+                    const reco::Candidate* pgtmp=findLasttau(pgtmp1,4);
+                    int goverlap=0;
+                    for (int ia=0;ia<igenq4;ia++){
+                        if(pgtmp->pt()==ptgenq4l[ia]) goverlap=1;}
+                    //if(pgtmp->pt()==gent_w_q1_pt||pgtmp->pt()==gent_w_q2_pt||pgtmp->pt()==genantit_w_q1_pt||pgtmp->pt()==genantit_w_q2_pt)
+                    //    cout<<" q4 overlap with tw"<<endl;
+                    //if(pgtmp->pt()==gent_b_pt||pgtmp->pt()==genantit_b_pt)                         cout<<" q4 overlap with tb"<<endl;
+                    //if(pgtmp->pt()>50&&igenq4<sizeq4&&goverlap==0&&pgtmp->pt()!=gent_w_q1_pt&&pgtmp->pt()!=gent_w_q2_pt&&pgtmp->pt()!=genantit_w_q1_pt&&pgtmp->pt()!=genantit_w_q2_pt){
+                    const reco::Candidate* pgtmp2=findFirstW(pgtmp1,4);
+                    if(pgtmp->pt()>50&&igenq4<sizeq4&&goverlap==0&&abs(pgtmp2->mother(0)->pdgId())!=24){
+                        ptgenq4l[igenq4] = pgtmp->pt();
+                        etagenq4l[igenq4] = pgtmp->eta();
+                        phigenq4l[igenq4] = pgtmp->phi();
+                        egenq4l[igenq4] = pgtmp->energy();
+                        ptgenq4f[igenq4] = pgtmp2->pt();
+                        etagenq4f[igenq4] = pgtmp2->eta();
+                        phigenq4f[igenq4] = pgtmp2->phi();
+                        egenq4f[igenq4] = pgtmp2->energy();
+                        mothergenq4f[igenq4] = pgtmp2->mother(0)->pdgId();
+                        const reco::Candidate* pgtmp3=findLasttau(pgtmp2->mother(0),pgtmp2->mother(0)->pdgId());
+                        if (pgtmp3->mother(0)!=NULL) mmothergenq4f[igenq4] = pgtmp3->mother(0)->pdgId();
+                        //cout<<pgtmp2->pdgId()<<"    "<<pgtmp2->mother(0)->pdgId()<<"  "<<mmothergenq4f[igenq4]<<endl;
+                        igenq4+=1;
+                    }
+                }
+            }
+
+            int igenq5=0;
+            int sizeq5=5;
+            for(size_t ik=0; ik<genParticles->size();ik++)
+            {
+                if(abs((*genParticles)[ik].pdgId())==5)
+                {
+                    const reco::Candidate* pgtmp1 = &(*genParticles)[ik];
+                    //const reco::Candidate* pgtmp=findLastW(pgtmp1,5);
+                    const reco::Candidate* pgtmp=findLasttau(pgtmp1,5);
+                    int goverlap=0;
+                    for (int ia=0;ia<igenq5;ia++){
+                        if(pgtmp->pt()==ptgenq5l[ia]) goverlap=1;}
+                    const reco::Candidate* pgtmp2=findFirstW(pgtmp1,5);
+                    //if(pgtmp->pt()==gent_w_q1_pt||pgtmp->pt()==gent_w_q2_pt||pgtmp->pt()==genantit_w_q1_pt||pgtmp->pt()==genantit_w_q2_pt)
+                      //  cout<<" q5 overlap with tw"<<endl;
+                    //if(pgtmp->pt()==gent_b_pt||pgtmp->pt()==genantit_b_pt)                         cout<<" q5 overlap with tb"<<endl;
+                    if(pgtmp->pt()>50&&igenq5<sizeq5&&goverlap==0&&abs(pgtmp2->mother(0)->pdgId())!=24&&abs(pgtmp2->mother(0)->pdgId())!=6){
+                        ptgenq5l[igenq5] = pgtmp->pt();
+                        etagenq5l[igenq5] = pgtmp->eta();
+                        phigenq5l[igenq5] = pgtmp->phi();
+                        egenq5l[igenq5] = pgtmp->energy();
+                        ptgenq5f[igenq5] = pgtmp2->pt();
+                        etagenq5f[igenq5] = pgtmp2->eta();
+                        phigenq5f[igenq5] = pgtmp2->phi();
+                        egenq5f[igenq5] = pgtmp2->energy();
+                        mothergenq5f[igenq5] = pgtmp2->mother(0)->pdgId();
+                        const reco::Candidate* pgtmp3=findLasttau(pgtmp2->mother(0),pgtmp2->mother(0)->pdgId());
+                        if (pgtmp3->mother(0)!=NULL) mmothergenq5f[igenq5] = pgtmp3->mother(0)->pdgId();
+                        //cout<<pgtmp2->pdgId()<<"    "<<pgtmp2->mother(0)->pdgId()<<"  "<<mmothergenq5f[igenq5]<<endl;
+                        igenq5+=1;
+                        //cout<<"q5   "<<igenq5<<"   "<<pgtmp2->pdgId()<<"   "<<pgtmp->mother(0)->pdgId()<<"   "<<pgtmp->pt()<<"   "<<pgtmp2->pt()<<"   "<<gent_b_pt<<"   "<<genantit_b_pt<<endl;
+                    }
+                }
+            }
+        //cout<<"nng   "<<gentop_pt<<"  "<<genantitop_pt<<"  "<<igenw<<"  "<<igenq1<<"  "<<igenq2<<"  "<<igenq3<<"  "<<igenq4<<"  "<<igenq5<<"  "<<igeng<<"  "<<endl;
+
     }//end of MC Info
     // *************************End of Gen Level Information******************//
 
@@ -2352,9 +2822,9 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             //const float rawPt  = met.shiftedPt(pat::MET::NoShift, pat::MET::Raw);
             //const float rawPhi = met.shiftedPhi(pat::MET::NoShift, pat::MET::Raw);
             //const float rawSumEt = met.shiftedSumEt(pat::MET::NoShift, pat::MET::Raw);
-            const float rawPt	 = met.uncorPt();//met.shiftedPt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
-            const float rawPhi   = met.uncorPhi();//met.shiftedPhi(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
-            const float rawSumEt = met.uncorSumEt();
+            Double_t rawPt	 = met.corPt();//met.shiftedPt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
+            Double_t rawPhi   = met.corPhi();//met.shiftedPhi(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
+            Double_t rawSumEt = met.corSumEt();
             //const float rawPt	 = met.shiftedPt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
             //const float rawPhi   = met.shiftedPhi(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
             //const float rawSumEt = met.shiftedSumEt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
@@ -2363,10 +2833,11 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             Double_t rawPx = rawMET_.Px();
             Double_t rawPy = rawMET_.Py();
             Double_t rawEt = std::hypot(rawPx,rawPy);
-            METraw_et = rawEt;
-            METraw_phi = rawPhi;
-            METraw_sumEt = rawSumEt;
-            double pxcorr = rawPx+TypeICorrMap_["corrEx"];
+            MET_et = rawEt;
+            MET_phi = rawPhi;
+            MET_sumEt = rawSumEt;
+            //cout<<MET_et<<" default MET  "<<MET_phi<<endl;
+            /*double pxcorr = rawPx+TypeICorrMap_["corrEx"];
             double pycorr = rawPy+TypeICorrMap_["corrEy"];
             double et     = std::hypot(pxcorr,pycorr);
             double sumEtcorr = rawSumEt+TypeICorrMap_["corrSumEt"];
@@ -2377,10 +2848,10 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             MET_phi = corrmet.Phi();
             MET_sumEt = sumEtcorr;
             MET_corrPx = TypeICorrMap_["corrEx"];
-            MET_corrPy = TypeICorrMap_["corrEy"];
+            MET_corrPy = TypeICorrMap_["corrEy"];*/
         }
         // ***************************************************************** //
- 
+        
         /// For the time being, set these to 1
         triggerWeight=1.0;
         pileupWeight=1.0;
@@ -2397,7 +2868,8 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         lep          = std::max(abs(leptonicV.daughter(0)->pdgId()), abs(leptonicV.daughter(1)->pdgId()));
         double energylep1     = leptonicV.daughter(0)->energy();
         met          = metCand.pt();
-        metPhi       = metCand.phi();
+        metPhi         = metCand.phi();
+        //cout<<met<<" met candidate "<<metPhi<<endl;
         //candMass     = graviton.mass();
         ptVlep       = leptonicV.pt();
         yVlep        = leptonicV.eta();
@@ -2474,6 +2946,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         phiVlepJEC      = WLeptonic.phi();
         massVlepJEC     = WLeptonic.mass();
         mtVlepJEC       =   sqrt(2*ptlep1*MET_et*(1.0-cos(philep1-MET_phi))); //WLeptonic.mt();
+        //cout<<ptVlep<<" lep W "<<ptVlepJEC<<"   "<<yVlep<<" lep W "<<yVlepJEC<<"   "<<phiVlep<<" lep W "<<phiVlepJEC<<"   "<<massVlep<<" lep W "<<massVlepJEC<<"   "<<endl;
         delPhilepmet = deltaPhi(philep1, MET_phi);
         //cout<<"mtVlepJEC"<<mtVlepJEC<<endl;
         ////////////////////////JEC for AK8/////////////////////////////////
@@ -2529,11 +3002,8 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 const pat::Jet& hadronicVpuppi = puppijets_->at(usenumber3);
                 // DeepAK8
                 JetHelper jet_helper(&hadronicVpuppi);
-		cout<<"check 1"<<endl;
-                jet_helper.setSubjets(*hadronicVSoftDrop, 0.8); // jetR=0.8
-		cout<<"check 2"<<endl;
+                //jet_helper.setSubjets(*hadronicVSoftDrop, 0.8); // jetR=0.8
                 const auto& nnpreds = fatjetNN_->predict(jet_helper);
-		cout<<"check 3"<<endl;
                 FatJetNNHelper nn(nnpreds);
                 jetAK8puppi_dnnTop       = nn.get_binarized_score_top();
                 jetAK8puppi_dnnW         = nn.get_binarized_score_w();
@@ -2574,14 +3044,15 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 jetAK8puppi_ptJEC       = jetAK8puppi_pt1[usenumber3]; // unpruned corrected jet pt
                 jetAK8puppi_eta     = jetAK8puppi_eta1[usenumber3]; // unpruned (w/o jec) jet eta
                 jetAK8puppi_phi      = hadronicVpuppi.phi(); // unpruned (w/o jec) jet phi
-                jetAK8puppi_tau1         = hadronicVpuppi.userFloat("NjettinessAK8:tau1");
-                jetAK8puppi_tau2         = hadronicVpuppi.userFloat("NjettinessAK8:tau2");
-                jetAK8puppi_tau3         = hadronicVpuppi.userFloat("NjettinessAK8:tau3");
+                jetAK8puppi_tau1         = hadronicVpuppi.userFloat("NjettinessAK8Puppi:tau1");
+                jetAK8puppi_tau2         = hadronicVpuppi.userFloat("NjettinessAK8Puppi:tau2");
+                jetAK8puppi_tau3         = hadronicVpuppi.userFloat("NjettinessAK8Puppi:tau3");
                 jetAK8puppi_tau21        = jetAK8puppi_tau2/jetAK8puppi_tau1;
-                jetAK8puppi_tau4         = hadronicVpuppi.userFloat("NjettinessAK8:tau4");
+                jetAK8puppi_tau4         = hadronicVpuppi.userFloat("NjettinessAK8Puppi:tau4");
                 jetAK8puppi_tau42        = jetAK8puppi_tau4/jetAK8puppi_tau2;
-                jetAK8puppi_sd       =  hadronicVpuppi.userFloat("ak8PFJetsCHSSoftDropMass"); // uncorrected pruned mass
+                jetAK8puppi_sd       =  hadronicVpuppi.userFloat("ak8PFJetsPuppiSoftDropMass"); // uncorrected pruned mass
                 jetAK8puppi_sdJEC  =corr_AK8puppiSD[usenumber3]*jetAK8puppi_sd;
+		//cout<<"jetAK8puppi_sd"<<jetAK8puppi_sd<<"  "<<jetAK8puppi_sdJEC<<endl;
                 Double_t gencorrect=1.0;
                 Double_t recocorrect_0eta1p3=1.0;
                 Double_t recocorrect_1p3eta2p5=1.0;
@@ -2590,7 +3061,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 recocorrect_1p3eta2p5=1.272-5.72e-04*jetAK8puppi_ptJEC+8.37e-07*pow(jetAK8puppi_ptJEC,2)-5.204e-10*pow(jetAK8puppi_ptJEC,3)+1.454e-13*pow(jetAK8puppi_ptJEC,4)-1.504e-17*pow(jetAK8puppi_ptJEC,5);
                 if (fabs(jetAK8puppi_eta)<=1.3){jetAK8puppi_sdcorr=jetAK8puppi_sd*gencorrect*recocorrect_0eta1p3;}
                 else if (fabs(jetAK8puppi_eta)<2.5 && fabs(jetAK8puppi_eta)>1.3){jetAK8puppi_sdcorr=jetAK8puppi_sd*gencorrect*recocorrect_1p3eta2p5;}
-                IDLoose = looseJetID(hadronicVpuppi);
+                IDLoose = tightJetIDpuppi(hadronicVpuppi);
                 IDTight = tightJetIDpuppi(hadronicVpuppi);
             }
             
@@ -2605,7 +3076,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 const pat::Jet& hadronicVpuppi_2 = puppijets_->at(usenumber2);
                 // DeepAK8
                 JetHelper jet_helper_2(&hadronicVpuppi_2);
-                jet_helper_2.setSubjets(*hadronicVSoftDrop, 0.8); // jetR=0.8
+                //jet_helper_2.setSubjets(*hadronicVSoftDrop, 0.8); // jetR=0.8
                 const auto& nnpreds_2 = fatjetNN_->predict(jet_helper_2);
                 FatJetNNHelper nn_2(nnpreds_2);
                 jetAK8puppi_dnnTop_2       = nn_2.get_binarized_score_top();
@@ -2646,13 +3117,13 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 jetAK8puppi_ptJEC_2       = jetAK8puppi_pt1[usenumber2]; // unpruned corrected jet pt
                 jetAK8puppi_eta_2     = jetAK8puppi_eta1[usenumber2]; // unpruned (w/o jec) jet eta
                 jetAK8puppi_phi_2      = hadronicVpuppi_2.phi(); // unpruned (w/o jec) jet phi
-                jetAK8puppi_tau1_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau1");
-                jetAK8puppi_tau2_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau2");
-                jetAK8puppi_tau3_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau3");
+                jetAK8puppi_tau1_2         = hadronicVpuppi_2.userFloat("NjettinessAK8Puppi:tau1");
+                jetAK8puppi_tau2_2         = hadronicVpuppi_2.userFloat("NjettinessAK8Puppi:tau2");
+                jetAK8puppi_tau3_2         = hadronicVpuppi_2.userFloat("NjettinessAK8Puppi:tau3");
                 jetAK8puppi_tau21_2        = jetAK8puppi_tau2_2/jetAK8puppi_tau1_2;
-                jetAK8puppi_tau4_2         = hadronicVpuppi_2.userFloat("NjettinessAK8:tau4");
+                jetAK8puppi_tau4_2         = hadronicVpuppi_2.userFloat("NjettinessAK8Puppi:tau4");
                 jetAK8puppi_tau42_2        = jetAK8puppi_tau4_2/jetAK8puppi_tau2_2;
-                jetAK8puppi_sd_2       =  hadronicVpuppi_2.userFloat("ak8PFJetsCHSSoftDropMass"); // uncorrected pruned mass
+                jetAK8puppi_sd_2       =  hadronicVpuppi_2.userFloat("ak8PFJetsPuppiSoftDropMass"); // uncorrected pruned mass
                 jetAK8puppi_sdJEC_2  =corr_AK8puppiSD[usenumber2]*jetAK8puppi_sd_2;
                 Double_t gencorrect=1.0;
                 Double_t recocorrect_0eta1p3=1.0;
@@ -2662,7 +3133,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                     recocorrect_1p3eta2p5=1.272-5.72e-04*jetAK8puppi_ptJEC_2+8.37e-07*pow(jetAK8puppi_ptJEC_2,2)-5.204e-10*pow(jetAK8puppi_ptJEC_2,3)+1.454e-13*pow(jetAK8puppi_ptJEC_2,4)-1.504e-17*pow(jetAK8puppi_ptJEC_2,5);
                 if (fabs(jetAK8puppi_eta_2)<=1.3){jetAK8puppi_sdcorr_2=jetAK8puppi_sd_2*gencorrect*recocorrect_0eta1p3;}
                 else if (fabs(jetAK8puppi_eta_2)<2.5 && fabs(jetAK8puppi_eta_2)>1.3){jetAK8puppi_sdcorr_2=jetAK8puppi_sd_2*gencorrect*recocorrect_1p3eta2p5;}
-                IDLoose_2 = looseJetID(hadronicVpuppi_2);
+                IDLoose_2 = tightJetIDpuppi(hadronicVpuppi_2);
                 IDTight_2 = tightJetIDpuppi(hadronicVpuppi_2);
             }
 
@@ -2677,7 +3148,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 const pat::Jet& hadronicVpuppi_3 = puppijets_->at(usenumber1);
                 // DeepAK8
                 JetHelper jet_helper_3(&hadronicVpuppi_3);
-                jet_helper_3.setSubjets(*hadronicVSoftDrop, 0.8); // jetR=0.8
+                //jet_helper_3.setSubjets(*hadronicVSoftDrop, 0.8); // jetR=0.8
                 const auto& nnpreds_3 = fatjetNN_->predict(jet_helper_3);
                 FatJetNNHelper nn_3(nnpreds_3);
                 jetAK8puppi_dnnTop_3       = nn_3.get_binarized_score_top();
@@ -2718,13 +3189,13 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 jetAK8puppi_ptJEC_3       = jetAK8puppi_pt1[usenumber1]; // unpruned corrected jet pt
                 jetAK8puppi_eta_3     = jetAK8puppi_eta1[usenumber1]; // unpruned (w/o jec) jet eta
                 jetAK8puppi_phi_3      = hadronicVpuppi_3.phi(); // unpruned (w/o jec) jet phi
-                jetAK8puppi_tau1_3         = hadronicVpuppi_3.userFloat("NjettinessAK8:tau1");
-                jetAK8puppi_tau2_3         = hadronicVpuppi_3.userFloat("NjettinessAK8:tau2");
-                jetAK8puppi_tau3_3         = hadronicVpuppi_3.userFloat("NjettinessAK8:tau3");
+                jetAK8puppi_tau1_3         = hadronicVpuppi_3.userFloat("NjettinessAK8Puppi:tau1");
+                jetAK8puppi_tau2_3         = hadronicVpuppi_3.userFloat("NjettinessAK8Puppi:tau2");
+                jetAK8puppi_tau3_3         = hadronicVpuppi_3.userFloat("NjettinessAK8Puppi:tau3");
                 jetAK8puppi_tau21_3        = jetAK8puppi_tau2_3/jetAK8puppi_tau1_3;
-                jetAK8puppi_tau4_3         = hadronicVpuppi_3.userFloat("NjettinessAK8:tau4");
+                jetAK8puppi_tau4_3         = hadronicVpuppi_3.userFloat("NjettinessAK8Puppi:tau4");
                 jetAK8puppi_tau42_3        = jetAK8puppi_tau4_3/jetAK8puppi_tau2_3;
-                jetAK8puppi_sd_3       =  hadronicVpuppi_3.userFloat("ak8PFJetsCHSSoftDropMass"); // uncorrected pruned mass
+                jetAK8puppi_sd_3       =  hadronicVpuppi_3.userFloat("ak8PFJetsPuppiSoftDropMass"); // uncorrected pruned mass
                 jetAK8puppi_sdJEC_3  =corr_AK8puppiSD[usenumber1]*jetAK8puppi_sd_3;
                 Double_t gencorrect=1.0;
                 Double_t recocorrect_0eta1p3=1.0;
@@ -2734,7 +3205,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 recocorrect_1p3eta2p5=1.272-5.72e-04*jetAK8puppi_ptJEC_3+8.37e-07*pow(jetAK8puppi_ptJEC_3,2)-5.204e-10*pow(jetAK8puppi_ptJEC_3,3)+1.454e-13*pow(jetAK8puppi_ptJEC_3,4)-1.504e-17*pow(jetAK8puppi_ptJEC_3,5);
                 if (fabs(jetAK8puppi_eta_3)<=1.3){jetAK8puppi_sdcorr_3=jetAK8puppi_sd_3*gencorrect*recocorrect_0eta1p3;}
                 else if (fabs(jetAK8puppi_eta_3)<2.5 && fabs(jetAK8puppi_eta_3)>1.3){jetAK8puppi_sdcorr_3=jetAK8puppi_sd_3*gencorrect*recocorrect_1p3eta2p5;}
-                IDLoose_3 = looseJetID(hadronicVpuppi_3);
+                IDLoose_3 = tightJetIDpuppi(hadronicVpuppi_3);
                 IDTight_3 = tightJetIDpuppi(hadronicVpuppi_3);
             }
 
@@ -2767,19 +3238,12 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                     ak4jet_e[nak4] =   corr*uncorrJet.energy();
                     ak4jet_csv[nak4] = (*ak4jets)[ik].bDiscriminator("pfCombinedSecondaryVertexV2BJetTags");
                     ak4jet_icsv[nak4] = (*ak4jets)[ik].bDiscriminator("pfCombinedInclusiveSecondaryVertexV2BJetTags");
-                    if(!RunOnSig_){
-                        ak4jet_deepcsvudsg[nak4] = (*ak4jets)[ik].bDiscriminator("deepFlavourJetTags:probudsg");
-                        ak4jet_deepcsvb[nak4] = (*ak4jets)[ik].bDiscriminator("deepFlavourJetTags:probb");
-                        ak4jet_deepcsvc[nak4] = (*ak4jets)[ik].bDiscriminator("deepFlavourJetTags:probc");
-                        ak4jet_deepcsvbb[nak4] = (*ak4jets)[ik].bDiscriminator("deepFlavourJetTags:probbb");
-                        ak4jet_deepcsvcc[nak4] = (*ak4jets)[ik].bDiscriminator("deepFlavourJetTags:probcc");}
-                    if(RunOnSig_){
                         ak4jet_deepcsvudsg[nak4] = (*ak4jets)[ik].bDiscriminator("pfDeepCSVJetTags:probudsg");
                         ak4jet_deepcsvb[nak4] = (*ak4jets)[ik].bDiscriminator("pfDeepCSVJetTags:probb");
                         ak4jet_deepcsvc[nak4] = (*ak4jets)[ik].bDiscriminator("pfDeepCSVJetTags:probc");
                         ak4jet_deepcsvbb[nak4] = (*ak4jets)[ik].bDiscriminator("pfDeepCSVJetTags:probbb");
-                        ak4jet_deepcsvcc[nak4] = (*ak4jets)[ik].bDiscriminator("pfDeepCSVJetTags:probcc");}
-                    ak4jet_IDLoose[nak4] = looseJetID((*ak4jets)[ik]);
+                        ak4jet_deepcsvcc[nak4] = (*ak4jets)[ik].bDiscriminator("pfDeepCSVJetTags:probcc");
+                    ak4jet_IDLoose[nak4] = tightJetIDpuppi((*ak4jets)[ik]);
                     ak4jet_IDTight[nak4] = tightJetIDpuppi((*ak4jets)[ik]);
                     if(ak4jet_pt[nak4]>tj1 ) {
                         if(tj1>tj2) {tj2=tj1; nj2=nj1;}
@@ -2934,6 +3398,10 @@ void EDBRTreeMaker::setDummyValues() {
     candMass       = -99;
     ptVlep         = -99;
 
+    L1prefiring = -99;
+    L1prefiringup = -99;
+    L1prefiringdown = -99;
+    
     jetAK8puppi_ptJEC         = -99;
     jetAK8puppi_eta         = -99;
     jetAK8puppi_phi         = -99;
@@ -3360,17 +3828,43 @@ void EDBRTreeMaker::setDummyValues() {
     passFilter_EEBadSc_               = false;
     passFilter_badMuon_               = false;
     passFilter_badChargedHadron_      = false;
-
+    passecalBadCalibFilterUpdate_     = false;
     for(int i=0;i<5;i++){
-        ptgenwl[i]=-99;etagenwl[i]=-99;phigenwl[i]=-99;massgenwl[i]=-99;taggenwl[i]=-99;
+        ptgenwl[i]=-99;etagenwl[i]=-99;phigenwl[i]=-99;massgenwl[i]=-99;taggenwl[i]=-99;taggenwmother[i]=-99;
+        genw_q1_pt[i]=-99;genw_q1_phi[i]=-99;genw_q1_eta[i]=-99;genw_q1_e[i]=-99;genw_q1_pdg[i]=-99;
+        genw_q2_pt[i]=-99;genw_q2_phi[i]=-99;genw_q2_eta[i]=-99;genw_q2_e[i]=-99;genw_q2_pdg[i]=-99;
         ptgenzl[i]=-99;etagenzl[i]=-99;phigenzl[i]=-99;massgenzl[i]=-99;taggenzl[i]=-99;
         ptgenwf[i]=-99;etagenwf[i]=-99;phigenwf[i]=-99;massgenwf[i]=-99;
         ptgenzf[i]=-99;etagenzf[i]=-99;phigenzf[i]=-99;massgenzf[i]=-99;
     }
-    for(int i=0;i<5;i++){
+    for(int i=0;i<10;i++){
+        ptgengl[i]=-99;etagengl[i]=-99;phigengl[i]=-99;egengl[i]=-99;
         ptgengf[i]=-99;etagengf[i]=-99;phigengf[i]=-99;egengf[i]=-99;
-        ptgengf[i]=-99;etagengf[i]=-99;phigengf[i]=-99;egengf[i]=-99;
+        mothergengf[i]=-99;mmothergengf[i]=-99;
     }
+    for(int i=0;i<5;i++){
+        ptgenq1l[i]=-99;etagenq1l[i]=-99;phigenq1l[i]=-99;egenq1l[i]=-99;
+        ptgenq1f[i]=-99;etagenq1f[i]=-99;phigenq1f[i]=-99;egenq1f[i]=-99;
+        ptgenq2l[i]=-99;etagenq2l[i]=-99;phigenq2l[i]=-99;egenq2l[i]=-99;
+        ptgenq2f[i]=-99;etagenq2f[i]=-99;phigenq2f[i]=-99;egenq2f[i]=-99;
+        ptgenq3l[i]=-99;etagenq3l[i]=-99;phigenq3l[i]=-99;egenq3l[i]=-99;
+        ptgenq3f[i]=-99;etagenq3f[i]=-99;phigenq3f[i]=-99;egenq3f[i]=-99;
+        ptgenq4l[i]=-99;etagenq4l[i]=-99;phigenq4l[i]=-99;egenq4l[i]=-99;
+        ptgenq4f[i]=-99;etagenq4f[i]=-99;phigenq4f[i]=-99;egenq4f[i]=-99;
+        ptgenq5l[i]=-99;etagenq5l[i]=-99;phigenq5l[i]=-99;egenq5l[i]=-99;
+        ptgenq5f[i]=-99;etagenq5f[i]=-99;phigenq5f[i]=-99;egenq5f[i]=-99;
+        mmothergenq1f[i]=-99;mmothergenq2f[i]=-99;mmothergenq3f[i]=-99;mmothergenq4f[i]=-99;mmothergenq5f[i]=-99;
+
+    }
+    gent_b_pt=-99;gent_b_phi=-99;gent_b_eta=-99;gent_b_mass=-99;
+    genantit_b_pt=-99;genantit_b_phi=-99;genantit_b_eta=-99;genantit_b_mass=-99;
+    gent_w_pt=-99;gent_w_phi=-99;gent_w_eta=-99;gent_w_mass=-99;
+    genantit_w_pt=-99;genantit_w_phi=-99;genantit_w_eta=-99;genantit_w_mass=-99;
+    gent_w_q1_pt=-99;gent_w_q1_phi=-99;gent_w_q1_eta=-99;gent_w_q1_e=-99;gent_w_q1_pdg=-99;
+    genantit_w_q1_pt=-99;genantit_w_q1_phi=-99;genantit_w_q1_eta=-99;genantit_w_q1_e=-99;genantit_w_q1_pdg=-99;
+    gent_w_q2_pt=-99;gent_w_q2_phi=-99;gent_w_q2_eta=-99;gent_w_q2_e=-99;gent_w_q2_pdg=-99;
+    genantit_w_q2_pt=-99;genantit_w_q2_phi=-99;genantit_w_q2_eta=-99;genantit_w_q2_e=-99;genantit_w_q2_pdg=-99;
+    gent_w_tag=-99;genantit_w_tag=-99;
 
 }
 

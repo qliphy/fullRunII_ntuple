@@ -6,8 +6,8 @@ config.General.transferLogs = True
 
 config.section_("JobType")
 config.JobType.pluginName  = 'Analysis'
-#config.JobType.inputFiles = ['Fall17_17Nov2017C_V6_DATA_L1FastJet_AK4PFchs.txt','Fall17_17Nov2017C_V6_DATA_L2Relative_AK4PFchs.txt','Fall17_17Nov2017C_V6_DATA_L3Absolute_AK4PFchs.txt','Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK4PFchs.txt','Fall17_17Nov2017C_V6_DATA_L1FastJet_AK8PFchs.txt','Fall17_17Nov2017C_V6_DATA_L2Relative_AK8PFchs.txt','Fall17_17Nov2017C_V6_DATA_L3Absolute_AK8PFchs.txt','Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK8PFchs.txt','Fall17_17Nov2017C_V6_DATA_L1FastJet_AK8PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L2Relative_AK8PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L3Absolute_AK8PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK8PFPuppi.txt']
-config.JobType.inputFiles = ['Fall17_17Nov2017C_V6_DATA_L1FastJet_AK4PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L2Relative_AK4PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L3Absolute_AK4PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK4PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L1FastJet_AK8PFchs.txt','Fall17_17Nov2017C_V6_DATA_L2Relative_AK8PFchs.txt','Fall17_17Nov2017C_V6_DATA_L3Absolute_AK8PFchs.txt','Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK8PFchs.txt','Fall17_17Nov2017C_V6_DATA_L1FastJet_AK8PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L2Relative_AK8PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L3Absolute_AK8PFPuppi.txt','Fall17_17Nov2017C_V6_DATA_L2L3Residual_AK8PFPuppi.txt']
+#config.JobType.inputFiles = ['Fall17_17Nov2017C_V32_DATA_L1FastJet_AK4PFchs.txt','Fall17_17Nov2017C_V32_DATA_L2Relative_AK4PFchs.txt','Fall17_17Nov2017C_V32_DATA_L3Absolute_AK4PFchs.txt','Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK4PFchs.txt','Fall17_17Nov2017C_V32_DATA_L1FastJet_AK8PFchs.txt','Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFchs.txt','Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFchs.txt','Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFchs.txt','Fall17_17Nov2017C_V32_DATA_L1FastJet_AK8PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFPuppi.txt','L1PrefiringMaps_new.root']
+config.JobType.inputFiles = ['Fall17_17Nov2017C_V32_DATA_L1FastJet_AK4PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L2Relative_AK4PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L3Absolute_AK4PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK4PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L1FastJet_AK8PFchs.txt','Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFchs.txt','Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFchs.txt','Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFchs.txt','Fall17_17Nov2017C_V32_DATA_L1FastJet_AK8PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L2Relative_AK8PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L3Absolute_AK8PFPuppi.txt','Fall17_17Nov2017C_V32_DATA_L2L3Residual_AK8PFPuppi.txt','L1PrefiringMaps_new.root']
 # Name of the CMSSW configuration file
 #config.JobType.psetName    = 'bkg_ana.py'
 config.JobType.psetName    = 'analysis.py'
@@ -18,13 +18,13 @@ config.section_("Data")
 config.Data.inputDataset = '/SingleElectron/Run2017B-31Mar2018-v1/MINIAOD'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased'
-config.Data.unitsPerJob = 90
+config.Data.unitsPerJob = 200
 config.Data.lumiMask = 'Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt'
 config.Data.runRange = ''#'250843-250932' # '193093-194075'
 config.Data.publication = False
 name = 'WWW'
 steam_dir = 'xulyu'
-#config.Data.outLFNDirBase = '/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/' + steam_dir + '/' + name + '/'
+##config.Data.outLFNDirBase = '/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/' + steam_dir + '/' + name + '/'
 config.Data.outputDatasetTag = 'singleElectron-17B-v1_new'
 
 config.section_("Site")
