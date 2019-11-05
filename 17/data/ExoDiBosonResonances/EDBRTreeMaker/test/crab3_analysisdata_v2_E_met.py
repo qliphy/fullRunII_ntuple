@@ -1,21 +1,21 @@
 from WMCore.Configuration import Configuration
 config = Configuration()
 config.section_("General")
-config.General.requestName   = 'MET-17D-v1_new'
+config.General.requestName   = 'MET-17E-v1_new'
 config.General.transferLogs = True
 
 config.section_("JobType")
 config.JobType.pluginName  = 'Analysis'
-#config.JobType.inputFiles = ['Fall17_17Nov2017D_V32_DATA_L1FastJet_AK4PFchs.txt','Fall17_17Nov2017D_V32_DATA_L2Relative_AK4PFchs.txt','Fall17_17Nov2017D_V32_DATA_L3Absolute_AK4PFchs.txt','Fall17_17Nov2017D_V32_DATA_L2L3Residual_AK4PFchs.txt','Fall17_17Nov2017D_V32_DATA_L1FastJet_AK8PFchs.txt','Fall17_17Nov2017D_V32_DATA_L2Relative_AK8PFchs.txt','Fall17_17Nov2017D_V32_DATA_L3Absolute_AK8PFchs.txt','Fall17_17Nov2017D_V32_DATA_L2L3Residual_AK8PFchs.txt','Fall17_17Nov2017D_V32_DATA_L1FastJet_AK8PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L2Relative_AK8PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L3Absolute_AK8PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L2L3Residual_AK8PFPuppi.txt','L1PrefiringMaps_new.root']
+#config.JobType.inputFiles = ['Fall17_17Nov2017DE_V32_DATA_L1FastJet_AK4PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L2Relative_AK4PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK4PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK4PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L1FastJet_AK8PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L2Relative_AK8PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK8PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK8PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L1FastJet_AK8PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L2Relative_AK8PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK8PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK8PFPuppi.txt','L1PrefiringMaps_new.root']
 # Name of the CMSSW configuration file
-config.JobType.inputFiles = ['Fall17_17Nov2017D_V32_DATA_L1FastJet_AK4PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L2Relative_AK4PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L3Absolute_AK4PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L2L3Residual_AK4PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L1FastJet_AK8PFchs.txt','Fall17_17Nov2017D_V32_DATA_L2Relative_AK8PFchs.txt','Fall17_17Nov2017D_V32_DATA_L3Absolute_AK8PFchs.txt','Fall17_17Nov2017D_V32_DATA_L2L3Residual_AK8PFchs.txt','Fall17_17Nov2017D_V32_DATA_L1FastJet_AK8PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L2Relative_AK8PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L3Absolute_AK8PFPuppi.txt','Fall17_17Nov2017D_V32_DATA_L2L3Residual_AK8PFPuppi.txt','L1PrefiringMaps_new.root']
+config.JobType.inputFiles = ['Fall17_17Nov2017DE_V32_DATA_L1FastJet_AK4PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L2Relative_AK4PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK4PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK4PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L1FastJet_AK8PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L2Relative_AK8PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK8PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK8PFchs.txt','Fall17_17Nov2017DE_V32_DATA_L1FastJet_AK8PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L2Relative_AK8PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L3Absolute_AK8PFPuppi.txt','Fall17_17Nov2017DE_V32_DATA_L2L3Residual_AK8PFPuppi.txt','L1PrefiringMaps_new.root']
 #config.JobType.psetName    = 'bkg_ana.py'
 config.JobType.psetName    = 'analysis_DE.py'
 #config.JobType.allowUndistributedCMSSW = True
 config.JobType.allowUndistributedCMSSW = True
 
 config.section_("Data")
-config.Data.inputDataset = '/MET/Run2017D-31Mar2018-v1/MINIAOD'
+config.Data.inputDataset = '/MET/Run2017E-31Mar2018-v1/MINIAOD'
 #config.Data.inputDataset = '/MET/Run2016B-PromptReco-v2/MINIAOD'#Run2015D-PromptReco-v3/MINIAOD'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased'
@@ -28,7 +28,7 @@ config.Data.publication = False
 name = 'WWW'
 steam_dir = 'xulyu'
 ##config.Data.outLFNDirBase = '/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/' + steam_dir + '/' + name + '/'
-config.Data.outputDatasetTag = 'MET-17D-v1_new'
+config.Data.outputDatasetTag = 'MET-17E-v1_new'
 
 config.section_("Site")
 config.Site.storageSite = 'T2_CH_CERN'

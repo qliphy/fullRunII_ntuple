@@ -1,3 +1,4 @@
+from WMCore.Configuration import Configuration
 steam_dir = 'xulyu'
 
 config = Configuration()
