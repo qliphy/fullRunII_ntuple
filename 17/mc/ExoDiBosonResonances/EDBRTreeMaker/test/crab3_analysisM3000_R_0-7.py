@@ -19,7 +19,7 @@ config.JobType.allowUndistributedCMSSW = True
 
 config.section_("Data")
 #config.Data.inputDataset = '/WJetsToLNu_13TeV-madgraph-pythia8-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM'
-config.Data.inputDataset = '/WkkToWRadionToWWW_M3000-R0-7_TuneCP5_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM'
+config.Data.inputDataset = '/WkkToWRadionToWWW_M3000-R0-7_TuneCP5_13TeV-madgraph/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v3/MINIAODSIM'
 #config.Data.inputDBS = 'global'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'FileBased'

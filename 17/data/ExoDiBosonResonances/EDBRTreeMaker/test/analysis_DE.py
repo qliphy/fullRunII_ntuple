@@ -9,7 +9,7 @@ filterMode = False # True
  
 ######## Sequence settings ##########
 corrJetsOnTheFly = False
-runOnMC  = True
+runOnMC  = False
 runOnSig = False
 DOHLTFILTERS = True
 #useJSON = not (runOnMC)
