@@ -41,7 +41,7 @@ goodElectrons = cms.EDProducer("PATElectronIdSelector",
                              vertex = cms.InputTag("offlineSlimmedPrimaryVertices"),
 			     idLabel = cms.string(tightEleIdLabel),
                              rho = cms.InputTag("fixedGridRhoFastjetAll"),
-			     effAreasConfigFile = cms.FileInPath("RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_92X.txt")
+			     effAreasConfigFile = cms.FileInPath("RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_94X.txt")
                              )
 
 looseElectrons = cms.EDProducer("PATElectronIdSelector",
@@ -52,7 +52,7 @@ looseElectrons = cms.EDProducer("PATElectronIdSelector",
                              vertex = cms.InputTag("offlineSlimmedPrimaryVertices"),
 			     idLabel = cms.string(looseEleIdLabel),
                              rho = cms.InputTag("fixedGridRhoFastjetAll"),
-			     effAreasConfigFile = cms.FileInPath("RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_92X.txt")
+			     effAreasConfigFile = cms.FileInPath("RecoEgamma/ElectronIdentification/data/Fall17/effAreaElectrons_cone03_pfNeuHadronsAndPhotons_94X.txt")
                              )
 
 eleSequence = cms.Sequence(goodElectrons + looseElectrons)
