@@ -1,7 +1,7 @@
 from WMCore.Configuration import Configuration
 config = Configuration()
 config.section_("General")
-config.General.requestName   = 'TT_TuneCP5'
+config.General.requestName   = 'TT_Hardonic_TuneCP5'
 config.General.transferLogs = True
 
 config.section_("JobType")
@@ -16,7 +16,7 @@ config.JobType.allowUndistributedCMSSW = True
 
 config.section_("Data")
 #config.Data.inputDataset = '/WJetsToLNu_13TeV-madgraph-pythia8-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM'
-config.Data.inputDataset = '/TTToSemiLeptonic_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM'
+config.Data.inputDataset = '/TTToHadronic_TuneCP5_PSweights_13TeV-powheg-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v1/MINIAODSIM'
 config.Data.inputDBS = 'global'
 #config.Data.inputDBS = 'phys03'
 config.Data.splitting = 'FileBased'
@@ -27,7 +27,7 @@ name = 'WWW'
 steam_dir = 'xulyu'
 ##config.Data.outLFNDirBase = '/store/group/dpg_trigger/comm_trigger/TriggerStudiesGroup/STEAM/' + steam_dir + '/' + name + '/'
 # This string is used to construct the output dataset name
-config.Data.outputDatasetTag = 'TT_TuneCP5'
+config.Data.outputDatasetTag = 'TT_Hardonic_TuneCP5'
 
 config.section_("Site")
 # Where the output files will be transmitted to
