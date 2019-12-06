@@ -6,20 +6,20 @@ config.General.transferLogs = True
 
 config.section_("JobType")
 config.JobType.pluginName  = 'Analysis'
-#config.JobType.inputFiles = ['Autumn18_RunD_V8_DATA_L1FastJet_AK4PFchs.txt','Autumn18_RunD_V8_DATA_L2Relative_AK4PFchs.txt','Autumn18_RunD_V8_DATA_L3Absolute_AK4PFchs.txt','Autumn18_RunD_V8_DATA_L2L3Residual_AK4PFchs.txt','Autumn18_RunD_V8_DATA_L1FastJet_AK8PFchs.txt','Autumn18_RunD_V8_DATA_L2Relative_AK8PFchs.txt','Autumn18_RunD_V8_DATA_L3Absolute_AK8PFchs.txt','Autumn18_RunD_V8_DATA_L2L3Residual_AK8PFchs.txt','Autumn18_RunD_V8_DATA_L1FastJet_AK8PFPuppi.txt','Autumn18_RunD_V8_DATA_L2Relative_AK8PFPuppi.txt','Autumn18_RunD_V8_DATA_L3Absolute_AK8PFPuppi.txt','Autumn18_RunD_V8_DATA_L2L3Residual_AK8PFPuppi.txt']
-config.JobType.inputFiles = ['Autumn18_RunD_V8_DATA_L1FastJet_AK4PFPuppi.txt','Autumn18_RunD_V8_DATA_L2Relative_AK4PFPuppi.txt','Autumn18_RunD_V8_DATA_L3Absolute_AK4PFPuppi.txt','Autumn18_RunD_V8_DATA_L2L3Residual_AK4PFPuppi.txt','Autumn18_RunD_V8_DATA_L1FastJet_AK8PFchs.txt','Autumn18_RunD_V8_DATA_L2Relative_AK8PFchs.txt','Autumn18_RunD_V8_DATA_L3Absolute_AK8PFchs.txt','Autumn18_RunD_V8_DATA_L2L3Residual_AK8PFchs.txt','Autumn18_RunD_V8_DATA_L1FastJet_AK8PFPuppi.txt','Autumn18_RunD_V8_DATA_L2Relative_AK8PFPuppi.txt','Autumn18_RunD_V8_DATA_L3Absolute_AK8PFPuppi.txt','Autumn18_RunD_V8_DATA_L2L3Residual_AK8PFPuppi.txt']
+#config.JobType.inputFiles = ['Autumn18_RunA_V8_DATA_L1FastJet_AK4PFchs.txt','Autumn18_RunA_V8_DATA_L2Relative_AK4PFchs.txt','Autumn18_RunA_V8_DATA_L3Absolute_AK4PFchs.txt','Autumn18_RunA_V8_DATA_L2L3Residual_AK4PFchs.txt','Autumn18_RunA_V8_DATA_L1FastJet_AK8PFchs.txt','Autumn18_RunA_V8_DATA_L2Relative_AK8PFchs.txt','Autumn18_RunA_V8_DATA_L3Absolute_AK8PFchs.txt','Autumn18_RunA_V8_DATA_L2L3Residual_AK8PFchs.txt','Autumn18_RunA_V8_DATA_L1FastJet_AK8PFPuppi.txt','Autumn18_RunA_V8_DATA_L2Relative_AK8PFPuppi.txt','Autumn18_RunA_V8_DATA_L3Absolute_AK8PFPuppi.txt','Autumn18_RunA_V8_DATA_L2L3Residual_AK8PFPuppi.txt','L1PrefiringMaps_new.root']
+config.JobType.inputFiles = ['Autumn18_RunA_V8_DATA_L1FastJet_AK4PFPuppi.txt','Autumn18_RunA_V8_DATA_L2Relative_AK4PFPuppi.txt','Autumn18_RunA_V8_DATA_L3Absolute_AK4PFPuppi.txt','Autumn18_RunA_V8_DATA_L2L3Residual_AK4PFPuppi.txt','Autumn18_RunA_V8_DATA_L1FastJet_AK8PFchs.txt','Autumn18_RunA_V8_DATA_L2Relative_AK8PFchs.txt','Autumn18_RunA_V8_DATA_L3Absolute_AK8PFchs.txt','Autumn18_RunA_V8_DATA_L2L3Residual_AK8PFchs.txt','Autumn18_RunA_V8_DATA_L1FastJet_AK8PFPuppi.txt','Autumn18_RunA_V8_DATA_L2Relative_AK8PFPuppi.txt','Autumn18_RunA_V8_DATA_L3Absolute_AK8PFPuppi.txt','Autumn18_RunA_V8_DATA_L2L3Residual_AK8PFPuppi.txt','L1PrefiringMaps_new.root']
 # Name of the CMSSW configuration file
 #config.JobType.psetName    = 'bkg_ana.py'
-config.JobType.psetName    = 'analysis.py'
+config.JobType.psetName    = 'analysis_D.py'
 #config.JobType.allowUndistributedCMSSW = True
 config.JobType.allowUndistributedCMSSW = True
 
 config.section_("Data")
-config.Data.inputDataset = '/SingleMET/Run2018D-17Sep2018-v1/MINIAOD'
+config.Data.inputDataset = '/MET/Run2018D-PromptReco-v1/MINIAOD'
 config.Data.inputDBS = 'global'
 config.Data.splitting = 'LumiBased'
 config.Data.unitsPerJob = 90
-config.Data.lumiMask = 'Cert_294927-306462_13TeV_PromptReco_Collisions17_JSON.txt'
+config.Data.lumiMask = 'Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
 config.Data.runRange = ''#'250843-250932' # '193093-194075'
 config.Data.publication = False
 name = 'WWW'

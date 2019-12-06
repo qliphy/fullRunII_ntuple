@@ -6,7 +6,7 @@ config.General.transferLogs = True
 
 config.section_("JobType")
 config.JobType.pluginName  = 'Analysis'
-config.JobType.inputFiles = ['Autumn18_V8_MC_L1FastJet_AK4PFchs.txt','Autumn18_V8_MC_L2Relative_AK4PFchs.txt','Autumn18_V8_MC_L3Absolute_AK4PFchs.txt','Autumn18_V8_MC_L1FastJet_AK8PFchs.txt','Autumn18_V8_MC_L2Relative_AK8PFchs.txt','Autumn18_V8_MC_L3Absolute_AK8PFchs.txt','Autumn18_V8_MC_L1FastJet_AK8PFPuppi.txt','Autumn18_V8_MC_L2Relative_AK8PFPuppi.txt','Autumn18_V8_MC_L3Absolute_AK8PFPuppi.txt','Autumn18_V8_MC_L1FastJet_AK4PFPuppi.txt','Autumn18_V8_MC_L2Relative_AK4PFPuppi.txt','Autumn18_V8_MC_L3Absolute_AK4PFPuppi.txt']
+config.JobType.inputFiles = ['Autumn18_V8_MC_L1FastJet_AK4PFchs.txt','Autumn18_V8_MC_L2Relative_AK4PFchs.txt','Autumn18_V8_MC_L3Absolute_AK4PFchs.txt','Autumn18_V8_MC_L1FastJet_AK8PFchs.txt','Autumn18_V8_MC_L2Relative_AK8PFchs.txt','Autumn18_V8_MC_L3Absolute_AK8PFchs.txt','Autumn18_V8_MC_L1FastJet_AK8PFPuppi.txt','Autumn18_V8_MC_L2Relative_AK8PFPuppi.txt','Autumn18_V8_MC_L3Absolute_AK8PFPuppi.txt','Autumn18_V8_MC_L1FastJet_AK4PFPuppi.txt','Autumn18_V8_MC_L2Relative_AK4PFPuppi.txt','Autumn18_V8_MC_L3Absolute_AK4PFPuppi.txt','L1PrefiringMaps_new.root']
 #config.JobType.inputFiles = ['PHYS14_25_V2_All_L1FastJet_AK4PFchs.txt','PHYS14_25_V2_All_L2Relative_AK4PFchs.txt','PHYS14_25_V2_All_L3Absolute_AK4PFchs.txt','PHYS14_25_V2_All_L1FastJet_AK8PFchs.txt','PHYS14_25_V2_All_L2Relative_AK8PFchs.txt','PHYS14_25_V2_All_L3Absolute_AK8PFchs.txt']
 # Name of the CMSSW configuration file
 #config.JobType.psetName    = 'bkg_ana.py'
@@ -16,7 +16,7 @@ config.JobType.allowUndistributedCMSSW = True
 
 config.section_("Data")
 #config.Data.inputDataset = '/WJetsToLNu_13TeV-madgraph-pythia8-tauola/Phys14DR-PU20bx25_PHYS14_25_V1-v1/MINIAODSIM'
-config.Data.inputDataset = '/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-amcatnlo-pythia8/RunIIFall17MiniAODv2-PU2017_12Apr2018_94X_mc2017_realistic_v14-v2/MINIAODSIM'
+config.Data.inputDataset = '/ST_s-channel_4f_leptonDecays_TuneCP5_13TeV-madgraph-pythia8/RunIIAutumn18MiniAOD-102X_upgrade2018_realistic_v15_ext1-v4/MINIAODSIM'
 config.Data.inputDBS = 'global'
 #config.Data.inputDBS = 'phys03'
 config.Data.splitting = 'FileBased'

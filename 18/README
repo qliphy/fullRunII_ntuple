@@ -1,7 +1,8 @@
 cmsrel CMSSW_10_2_10
 cd CMSSW_10_2_10/src
 cmsenv
-
+git cms-merge-topic lathomas:L1Prefiring_10_2_6
+cp L1Prefiring/EventWeightProducer/files/L1PrefiringMaps_new.root ExoDiBosonResonances/EDBRTreeMaker/test/
 # clone the package and check out the "for94X" branch
 git clone ssh://git@gitlab.cern.ch:7999/DeepAK8/NNKit.git -b for94X
 # setup mxnet library (use the one from CMSSW_10_2_0)
