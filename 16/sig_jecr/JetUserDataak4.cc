@@ -65,9 +65,9 @@ using namespace trigger;
 
 typedef std::vector<pat::Jet> PatJetCollection;
 
-class JetUserData : public edm::EDProducer {
+class JetUserDataak4 : public edm::EDProducer {
 	public:
-		JetUserData( const edm::ParameterSet & );   
+		JetUserDataak4( const edm::ParameterSet & );   
 		virtual double get_JER_corr(float JERSF, bool isMC, pat::Jet jet, double conSize, float PtResolution, double jetCorrFactor);
 
 	private:
@@ -99,16 +99,16 @@ class JetUserData : public edm::EDProducer {
 		JME::JetResolutionScaleFactor res_sf;
 		//////// for JEC before JEC uncertainty
 		FactorizedJetCorrector* jecOffset_;
-		FactorizedJetCorrector* jecAk8_;
+		FactorizedJetCorrector* jecAK4_;
 		std::vector<std::string> jetCorrLabel_;
-		std::vector<std::string> jecAk8chsLabels_;
+		std::vector<std::string> jecAK4chsLabels_;
 		std::vector<std::string> offsetCorrLabel_;
 		edm::EDGetTokenT<reco::VertexCollection> VertexToken_;
 		//////// Meng 2017/5/8
 };
 
 
-JetUserData::JetUserData(const edm::ParameterSet& iConfig) :
+JetUserDataak4::JetUserDataak4(const edm::ParameterSet& iConfig) :
 	jLabel_             (consumes<std::vector<pat::Jet>>(iConfig.getParameter<edm::InputTag>("jetLabel"))), 
 	rhoLabel_           (consumes<double>(iConfig.getParameter<edm::InputTag>("rho"))),
 	coneSize_           (iConfig.getParameter<double>("coneSize")),
@@ -120,8 +120,8 @@ JetUserData::JetUserData(const edm::ParameterSet& iConfig) :
 	hltPath_            (iConfig.getParameter<std::string>("hltPath")),
 	hlt2reco_deltaRmax_ (iConfig.getParameter<double>("hlt2reco_deltaRmax")),
 	candSVTagInfos_         (iConfig.getParameter<std::string>("candSVTagInfos")),
-	jecAk8chsLabels_    (iConfig.getParameter<std::vector<std::string>>("jecAk8chsPayloadNames_jetUserdata")),
-	VertexToken_ (consumes<reco::VertexCollection> (iConfig.getParameter<edm::InputTag>( "vertex_jetUserdata" )))
+	jecAK4chsLabels_    (iConfig.getParameter<std::vector<std::string>>("jecAK4chsPayloadNames_JetUserData")),
+	VertexToken_ (consumes<reco::VertexCollection> (iConfig.getParameter<edm::InputTag>( "vertex_JetUserData" )))
 {
 	if (getJERFromTxt_) {
 		resolutionsFile_  = iConfig.getParameter<std::string>("resolutionsFile");
@@ -129,14 +129,14 @@ JetUserData::JetUserData(const edm::ParameterSet& iConfig) :
 	} else
 		jerLabel_         = iConfig.getParameter<std::string>("jerLabel");
 	//////// for JEC before JEC uncertainty
-	jetCorrLabel_ = jecAk8chsLabels_;
+	jetCorrLabel_ = jecAK4chsLabels_;
 	offsetCorrLabel_.push_back(jetCorrLabel_[0]);
 
 	//////// Meng 2017/5/8
 	produces<vector<pat::Jet> >();
 }
 
-double JetUserData::get_JER_corr(float JERSF, bool isMC, pat::Jet jet, double conSize, float PtResolution, double jetCorrFactor){
+double JetUserDataak4::get_JER_corr(float JERSF, bool isMC, pat::Jet jet, double conSize, float PtResolution, double jetCorrFactor){
 	double JER_corrFactor = 1.;
 	if(isMC) {
 		bool isGenMatched = 0;
@@ -163,14 +163,14 @@ double JetUserData::get_JER_corr(float JERSF, bool isMC, pat::Jet jet, double co
 }
 
 
-void JetUserData::produce( edm::Event& iEvent, const edm::EventSetup& iSetup) {
+void JetUserDataak4::produce( edm::Event& iEvent, const edm::EventSetup& iSetup) {
 
 	std::vector<JetCorrectorParameters> vPar;
-	for ( std::vector<std::string>::const_iterator payloadBegin = jecAk8chsLabels_.begin(), payloadEnd = jecAk8chsLabels_.end(), ipayload = payloadBegin; ipayload != payloadEnd; ++ipayload ) {
+	for ( std::vector<std::string>::const_iterator payloadBegin = jecAK4chsLabels_.begin(), payloadEnd = jecAK4chsLabels_.end(), ipayload = payloadBegin; ipayload != payloadEnd; ++ipayload ) {
 		JetCorrectorParameters pars(*ipayload);
 		vPar.push_back(pars);
 	}
-	jecAk8_ = new FactorizedJetCorrector(vPar);
+	jecAK4_ = new FactorizedJetCorrector(vPar);
 	vPar.clear();
 	for ( std::vector<std::string>::const_iterator payloadBegin = offsetCorrLabel_.begin(), payloadEnd = offsetCorrLabel_.end(), ipayload = payloadBegin; ipayload != payloadEnd; ++ipayload ) {
 		JetCorrectorParameters pars(*ipayload);
@@ -219,7 +219,6 @@ void JetUserData::produce( edm::Event& iEvent, const edm::EventSetup& iSetup) {
 	StringCutObjectSelector<reco::Candidate>* skipMuonSelection_ = new StringCutObjectSelector<reco::Candidate>(skipMuonSelection_string,true);
 	//--------for MET
 	for (size_t i = 0; i< jetColl->size(); i++){
-                if((*jetColl)[i].isPFJet()!=1)continue;
 		pat::Jet & jet = (*jetColl)[i];
 
 		/////// for JEC before JEC uncertainty
@@ -227,14 +226,14 @@ void JetUserData::produce( edm::Event& iEvent, const edm::EventSetup& iSetup) {
 		reco::Candidate::LorentzVector rawJetP4 = jet.correctedP4(0);
 		reco::Candidate::LorentzVector rawJetP4_MET = jet.correctedP4(0);
 		if ( fabs(rawJetP4.eta()) < jetCorrEtaMax ){
-			jecAk8_->setJetEta( rawJetP4.eta() );
-			jecAk8_->setJetPt ( rawJetP4.pt() );
-			jecAk8_->setJetE  ( rawJetP4.energy() );
-			jecAk8_->setJetPhi( rawJetP4.phi()    );
-			jecAk8_->setJetA  ( jet.jetArea() );
-			jecAk8_->setRho   ( *(rho.product()) );
-			jecAk8_->setNPV   ( nVtx );
-			jetCorrFactor = jecAk8_->getCorrection();
+			jecAK4_->setJetEta( rawJetP4.eta() );
+			jecAK4_->setJetPt ( rawJetP4.pt() );
+			jecAK4_->setJetE  ( rawJetP4.energy() );
+			jecAK4_->setJetPhi( rawJetP4.phi()    );
+			jecAK4_->setJetA  ( jet.jetArea() );
+			jecAK4_->setRho   ( *(rho.product()) );
+			jecAK4_->setNPV   ( nVtx );
+			jetCorrFactor = jecAK4_->getCorrection();
 		}
 
 		double jetCorrFactor_l1 = 1.;
@@ -477,8 +476,8 @@ corrSumEt_MET_JER_down = std::hypot(corrEx_MET_JER_down,corrEy_MET_JER_down);
 	} //// Loop over all jets 
 
     iEvent.put(std::move(jetColl));
-	delete jecAk8_;
-	jecAk8_=0;
+	delete jecAK4_;
+	jecAK4_=0;
 	delete jecOffset_;
 	jecOffset_=0;
 	delete skipMuonSelection_;
@@ -488,7 +487,7 @@ corrSumEt_MET_JER_down = std::hypot(corrEx_MET_JER_down,corrEy_MET_JER_down);
 
 // ------------ method called once each job just after ending the event loop  ------------
 	bool
-JetUserData::isMatchedWithTrigger(const pat::Jet& p, trigger::TriggerObjectCollection triggerObjects, int& index, double& deltaR, double deltaRmax = 0.2)
+JetUserDataak4::isMatchedWithTrigger(const pat::Jet& p, trigger::TriggerObjectCollection triggerObjects, int& index, double& deltaR, double deltaRmax = 0.2)
 {
 	for (size_t i = 0 ; i < triggerObjects.size() ; i++){
 		float dR = sqrt(pow(triggerObjects[i].eta()-p.eta(),2)+ pow(acos(cos(triggerObjects[i].phi()-p.phi())),2)) ;
@@ -502,4 +501,4 @@ JetUserData::isMatchedWithTrigger(const pat::Jet& p, trigger::TriggerObjectColle
 }
 
 #include "FWCore/Framework/interface/MakerMacros.h"
-DEFINE_FWK_MODULE(JetUserData);
+DEFINE_FWK_MODULE(JetUserDataak4);
