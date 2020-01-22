@@ -327,7 +327,7 @@ private:
     double corr;
     double METraw_et, METraw_phi, METraw_sumEt;
     double MET_et, MET_phi, MET_sumEt, MET_corrPx, MET_corrPy;
-    double MET_et_new, MET_phi_new, MET_sumEt_new;
+    double MET_et_old,MET_et_new, MET_phi_new, MET_sumEt_new;
     // Marked for debug
     //-------------- Met uncertainty ----------------//
     double MET_et_JEC_up, MET_et_JEC_down, MET_et_JER_up, MET_et_JER_down;
@@ -1020,6 +1020,7 @@ EDBRTreeMaker::EDBRTreeMaker(const edm::ParameterSet& iConfig):
     //  outTree_->Branch("MET_corrPx",&MET_corrPx,"MET_corrPx/D");
     //  outTree_->Branch("MET_corrPy",&MET_corrPy,"MET_corrPy/D");
     outTree_->Branch("MET_et_new", &MET_et_new, "MET_et_new/D");
+    outTree_->Branch("MET_et_old", &MET_et_old, "MET_et_old/D");
     // Marked for debug
     outTree_->Branch("MET_et_JEC_up", &MET_et_JEC_up, "MET_et_JEC_up/D");
     outTree_->Branch("MET_et_JEC_down", &MET_et_JEC_down, "MET_et_JEC_down/D");
@@ -2999,6 +3000,7 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         // ************************* MET ********************** //
         iEvent.getByToken(metInputToken_ , METs_ );
         addTypeICorr(iEvent);
+	addTypeICorr_user(iEvent);
         for (const pat::MET &met : *METs_) {            //         const float  rawPt    = met.shiftedPt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
             //         const float  rawPhi   = met.shiftedPhi(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
             //         const float  rawSumEt = met.shiftedSumEt(pat::MET::METUncertainty::NoShift, pat::MET::METUncertaintyLevel::Raw);
@@ -3018,8 +3020,10 @@ EDBRTreeMaker::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
             double pycorr = rawPy+TypeICorrMap_["corrEy"];
             double et     = std::hypot(pxcorr,pycorr);
             double sumEtcorr = rawSumEt+TypeICorrMap_["corrSumEt"];
-            
-            
+            double pxcorr_newn= rawPx+TypeICorrMap_user_["corrEx_JEC"];
+            double pycorr_newn= rawPy+TypeICorrMap_user_["corrEy_JEC"];
+            double et_newn     = std::hypot(pxcorr_newn,pycorr_newn);
+            MET_et_old=et_newn; 
             // Marked for debug
             //------------------central value, correction from JetuserDataak4---------------------
             double pxcorr_new= rawPx+TypeICorrMap_user_["corrEx_JEC"]+TypeICorrMap_user_["corrEx_JER"];
