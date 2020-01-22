@@ -395,8 +395,8 @@ process.JetUserData = cms.EDProducer(
                                      jecAk8chsPayloadNames_jetUserdata = cms.vstring( jecLevelsAK8puppi ),
                                      vertex_jetUserdata = cms.InputTag("offlineSlimmedPrimaryVertices"),
                                      )
-jLabelak4 = "slimmedJets"
-jetAlgoak4    = 'AK4PFchs'
+jLabelak4 = "slimmedJetsPuppi"
+jetAlgoak4    = 'AK4PFPuppi'
 jer_era = "Fall17_17Nov2017_V23_MC"
 triggerResultsLabel      = "TriggerResults"
 triggerSummaryLabel      = "hltTriggerSummaryAOD"
@@ -418,7 +418,7 @@ process.JetUserDataak4 = cms.EDProducer(
                                         hltPath            = cms.string("HLT_PFHT800"),
                                         hlt2reco_deltaRmax = cms.double(0.2),
                                         candSVTagInfos         = cms.string("pfInclusiveSecondaryVertexFinder"),
-                                        jecAK4chsPayloadNames_JetUserData = cms.vstring( jecLevelsAK4chs ),
+                                        jecAK4chsPayloadNames_JetUserData = cms.vstring( BjecLevelsAK4chs ),
                                         vertex_JetUserData = cms.InputTag("offlineSlimmedPrimaryVertices"),
                                         )
 # L1 prefiring
